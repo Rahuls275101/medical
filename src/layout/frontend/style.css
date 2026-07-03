@@ -1,0 +1,82 @@
+ @import url('https://fonts.googleapis.com/css2?family=Manrope:wght@200..800&display=swap');
+body {
+   background: linear-gradient(135deg, #f4f7fa, #dfe9f3);
+   min-height: 100vh;
+   display: flex;
+   align-items: center;
+   justify-content: center;
+   font-family: "Manrope", sans-serif;
+ }
+ .login-card {
+   max-width: 420px;
+   width: 100%;
+   border-radius: 20px;
+   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.12);
+   padding: 35px;
+   background: #fff;
+ }label.form-check-label {
+    font-weight: 500;
+    font-size: 15px;
+}
+.question h5 {
+    font-size: 18px;
+    font-weight: 600;
+}
+.form-control {
+    font-size: 14px;
+    font-weight: 500;
+
+}
+ .logo {
+   max-width: 200px;
+   display: block;
+   margin: 0 auto 20px;
+ }
+ .btn-login {
+   background: #1f6f8b;
+   color: white;
+   border-radius: 10px;
+   padding: 10px;
+   font-weight: 600;
+ }
+ .btn-login:hover {
+   background: #15596f;
+   color: white;
+ }
+ .form-control {
+   border-radius: 10px;
+   padding: 10px;
+ }.form-label {
+    margin-bottom: 3px;
+    font-size: 15px;
+    font-weight: 500;
+}.quiz-box{
+        max-width: 1000px;
+        margin: 50px auto;
+        background: #fff;
+        border-radius: 20px;
+        box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        padding: 40px;
+    }
+    .logo{
+        max-width: 280px;
+        display: block;
+        margin: 0 auto 20px;
+    }
+    .question{
+        background: #f8f9fa;
+        padding: 20px;
+        border-radius: 12px;
+        margin-bottom: 25px;
+    }
+    .btn-submit{
+        background: #1f6f8b;
+        color: white;
+        border-radius: 10px;
+        padding: 10px 30px;
+        font-weight: 600;
+    }
+    .btn-submit:hover{
+        background: #15596f;
+        color: white;
+    }
