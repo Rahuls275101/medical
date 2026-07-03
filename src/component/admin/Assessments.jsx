@@ -275,7 +275,7 @@ const Assessments = () => {
                                         onClick={() => viewReport(report)}
                                         title="View Report"
                                       >
-                                        <i className="fas fa-eye"></i>
+                                        <i className="fas fa-eye"></i> view
                                       </button>
                                     </td>
                                   </tr>
