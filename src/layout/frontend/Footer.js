@@ -3,118 +3,201 @@ import React from "react";
 function Footer() {
   return (
        <React.StrictMode>
-        <footer className="main-footer">
-            <div className="auto-container">
-
-               
-                <div className="widgets-section">
-                    <div className="row clearfix">
-
-                       
-                        <div className="big-column col-lg-6 col-md-12 col-sm-12">
-                            <div className="row clearfix">
-
-                               
-                                <div className="footer-column col-lg-7 col-md-6 col-sm-12">
-                                    <div className="footer-widget logo-widget">
-                                        <div className="logo-box">
-                                            <a href="index.html"><img src="images/footer-logo.png" alt="" /></a>
-                                        </div>
-                                        <div className="text">Over 24 years experience and knowledge international
-                                            standards, technologicaly changes our industrial systems, we are dedicated
-                                            to provides the best solutions to our valued customers there are many
-                                            variations solutions.</div>
-                                    </div>
-                                </div>
-
-                               
-                                <div className="footer-column col-lg-5 col-md-6 col-sm-12">
-                                    <div className="footer-widget links-widget">
-                                        <div className="footer-title">
-                                            <h2>Products</h2>
-                                        </div>
-                                        <ul className="footer-lists">
-                                            <li><a href="">Agricultural Processing</a></li>
-                                            <li><a href="">Chemical Research</a></li>
-                                            <li><a href="">Material Engineering</a></li>
-                                            <li><a href="">Mechanical Engineering</a></li>
-                                            <li><a href="">Petroleum and Gas</a></li>
-                                            <li><a href="">Power and Energy</a></li>
-                                        </ul>
-                                    </div>
-                                </div>
-
-                            </div>
-                        </div>
-
-                 
-                        <div className="big-column col-lg-6 col-md-12 col-sm-12">
-                            <div className="row clearfix">
-
-                               
-                                <div className="footer-column col-lg-6 col-md-6 col-sm-12">
-                                    <div className="footer-widget links-widget">
-                                        <div className="footer-title">
-                                            <h2>Usefull Links</h2>
-                                        </div>
-                                        <ul className="footer-lists">
-                                             <li><a href="index.html">Home</a></li>
-                                            <li><a href="">Products</a></li>
-                                            <li><a href="industry.html">Industries</a></li>
-                                            <li><a href="">Support</a></li>
-                                            <li><a href="">Compnay</a></li>
-
-
-                                        </ul>
-                                    </div>
-                                </div>
-
-                               
-                                <div className="footer-column col-lg-6 col-md-6 col-sm-12">
-                                    <div className="footer-widget subscribe-widget">
-                                        <div className="footer-title">
-                                            <h2>Subscribe Us</h2>
-                                        </div>
-                                        <div className="widget-content">
-                                            <div className="text">Sign up today for tips and latest news and exclusive
-                                                special offers.</div>
-                                            <div className="subscribe-form">
-                                                <form method="post" action="">
-                                                    <div className="form-group">
-                                                        <input type="email" name="email" value=""
-                                                            placeholder="Email Address" required/>
-                                                        <button type="submit" className="theme-btn"><span
-                                                                className="fa fa-send"></span></button>
-                                                    </div>
-                                                </form>
-                                            </div>
-                                            <ul className="social-icon-two">
-                                                <li className="follow">Follow us :</li>
-                                                <li><a href=""><span className="fa fa-facebook"></span></a></li>
-                                                <li><a href=""><span className="fa fa-twitter"></span></a></li>
-                                                <li><a href=""><span className="fa fa-google-plus"></span></a></li>
-                                                <li><a href=""><span className="fa fa-pinterest-p"></span></a></li>
-                                                <li><a href=""><span className="fa fa-dribbble"></span></a></li>
-                                            </ul>
-                                        </div>
-                                    </div>
-                                </div>
-
-                            </div>
-                        </div>
-
-                    </div>
-                </div>
-
+        <footer>
+  <section className="footer-top-wrap">
+    <div className="container">
+      <div className="row">
+        <div className="single-item col-lg-4 col-md-6 col-12">
+          <div className="footer-box" style={{ paddingRight: 51 }}>
+            <div className="footer-logo">
+              {" "}
+              <a href="index-2.html">
+                <img
+                  src="img/logo.png"
+                  className="img-fluid"
+                  alt="footer-logo"
+                  style={{ height: 50 }}
+                />
+              </a>{" "}
             </div>
-            <div className="footer-bottom">
-                <div className="auto-container">
-                    <div className="copyright">&copy; Copyright 2022. All Rights Reserved. Designed by <a
-                            href="" target="_blank">starwebmaker</a>
-                    </div>
-                </div>
+            <div className="footer-about">
+              <p>
+                On the other hand we denounce with righteous indignation and
+                dislike mr turet suscipit lobortis nisl ut aliquip erat volutpat
+                autem vel eum iriure dolor in hendrerit
+              </p>
             </div>
-        </footer>
+          </div>
+        </div>
+        <div className="single-item col-lg-3 col-md-6 col-12">
+          <div className="footer-box">
+            <div className="footer-header">
+              <h3>Quick Links</h3>
+            </div>
+            <div className="footer-quick-link">
+              <ul>
+                <li>
+                  {" "}
+                  <a href="#">Home</a>{" "}
+                </li>
+                <li>
+                  {" "}
+                  <a href="#">Medical Leadership Workshops</a>{" "}
+                </li>
+                <li>
+                  {" "}
+                  <a href="#">About Us</a>{" "}
+                </li>
+                <li>
+                  {" "}
+                  <a href="#">Blog</a>{" "}
+                </li>
+                <li>
+                  {" "}
+                  <a href="#">Resources</a>{" "}
+                </li>
+                <li>
+                  {" "}
+                  <a href="#">Faq</a>{" "}
+                </li>
+                <li>
+                  {" "}
+                  <a href="#">Contact</a>{" "}
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+        <div className="single-item col-lg-2 col-md-6 col-12">
+          <div className="footer-box">
+            <div className="footer-header">
+              <h3>Departments</h3>
+            </div>
+            <div className="footer-departments">
+              <ul>
+                <li>
+                  <a href="single-departments.html">Dental Care</a>
+                </li>
+                <li>
+                  <a href="single-departments.html">Medicine</a>
+                </li>
+                <li>
+                  <a href="single-departments.html">Orthopedic</a>
+                </li>
+                <li>
+                  <a href="single-departments.html">Emergency</a>
+                </li>
+                <li>
+                  <a href="single-departments.html">Skilled Doctors</a>
+                </li>
+                <li>
+                  <a href="single-departments.html">Certified Clinic</a>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+        <div className="single-item col-lg-3 col-md-6 col-12">
+          <div className="footer-box">
+            <div className="footer-header">
+              <h3>Connect with us</h3>
+            </div>
+            <div className="footer-contact-info">
+              <ul>
+                <li>
+                  <i className="fas fa-map-marker-alt" />
+                  59 Street, 1200 Techpark
+                </li>
+                <li>
+                  <i className="fas fa-phone" />
+                  +91 9876543210
+                </li>
+                <li>
+                  <i className="far fa-envelope" />
+                  clinicianleader@gmail.com
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  <section className="footer-center-wrap">
+    <div className="container">
+      <div className="row no-gutters">
+        <div className="col-lg-4 col-12">
+          <div className="footer-social">
+            <ul>
+              <li>Follow Us:</li>
+              <li>
+                <a href="#">
+                  <i className="fab fa-facebook-f" />
+                </a>
+              </li>
+              <li>
+                <a href="#">
+                  <i className="fab fa-twitter" />
+                </a>
+              </li>
+              <li>
+                <a href="#">
+                  <i className="fab fa-linkedin-in" />
+                </a>
+              </li>
+              <li>
+                <a href="#">
+                  <i className="fab fa-pinterest-p" />
+                </a>
+              </li>
+              <li>
+                <a href="#">
+                  <i className="fab fa-skype" />
+                </a>
+              </li>
+            </ul>
+          </div>
+        </div>
+        <div className="col-lg-8 col-12">
+          <div className="row">
+            <div className="col-md-6 col-12">
+              <div className="newsletter-title">
+                <h4 className="item-title">Stay informed and healthy</h4>
+              </div>
+            </div>
+            <div className="col-md-6 col-12">
+              <div className="newsletter-form">
+                <div className="input-group stylish-input-group">
+                  <input
+                    type="text"
+                    className="form-control"
+                    placeholder="Enter your e-mail"
+                  />
+                  <span className="input-group-addon">
+                    <button type="submit">
+                      {" "}
+                      <span aria-hidden="true">SIGN UP!</span>{" "}
+                    </button>
+                  </span>{" "}
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  <section className="footer-bottom-wrap">
+    <div className="copyright">
+      Copyright @ 2026 Clinician Leader. All Rights Reserved.
+      <a href="https://www.starwebmaker.com/" target="_blank">
+        {" "}
+        Designed by Star Web Maker
+      </a>
+    </div>
+  </section>
+</footer>
+
          </React.StrictMode>
   );
 }
