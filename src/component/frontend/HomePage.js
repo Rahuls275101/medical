@@ -6,6 +6,7 @@ import jsPDF from 'jspdf';
 import html2canvas from 'html2canvas';
 import './PredyxAssessment.css';
 
+
 const HomePage = () => {
     // Form state - ALL fields from document
     const [formData, setFormData] = useState({
