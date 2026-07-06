@@ -14,8 +14,7 @@ import './css/magnific-popup.css';
 import './css/elements.css';
 import './css/style.css';
 import './css/PredyxAssessment.css';
-import "owl.carousel/dist/assets/owl.carousel.css";
-import "owl.carousel/dist/assets/owl.theme.default.css";
+
 
 
 

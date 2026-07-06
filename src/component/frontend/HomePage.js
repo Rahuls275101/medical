@@ -43,7 +43,8 @@ const HomePage = () => {
     const [showConfirm, setShowConfirm] = useState(false);
     const [currentStep, setCurrentStep] = useState(1);
     const [pdfLoading, setPdfLoading] = useState(false);
-    const totalSteps = 4; // Changed to 4 steps to include address
+    const [printLoading, setPrintLoading] = useState(false);
+    const totalSteps = 4;
     
     // Reference for PDF generation
     const reportRef = useRef(null);
@@ -61,7 +62,6 @@ const HomePage = () => {
 
     const validateStep = (step) => {
         if (step === 1) {
-            // Patient Information - Required fields
             if (!formData.patient_name || !formData.age || !formData.sex) {
                 setError('Please fill all patient information fields');
                 return false;
@@ -71,10 +71,8 @@ const HomePage = () => {
                 return false;
             }
         } else if (step === 2) {
-            // Address Information - Optional, no validation needed
             return true;
         } else if (step === 3) {
-            // Anthropometry - Required fields
             if (!formData.height_cm || !formData.weight_kg || 
                 !formData.waist_cm || !formData.hip_cm) {
                 setError('Please fill all anthropometry fields');
@@ -97,7 +95,6 @@ const HomePage = () => {
                 return false;
             }
         } else if (step === 4) {
-            // Clinical - Required fields
             if (!formData.sbp_mmHg) {
                 setError('Please enter systolic blood pressure');
                 return false;
@@ -126,7 +123,6 @@ const HomePage = () => {
         e.preventDefault();
         if (!validateStep(4)) return;
 
-        // Check for high risk (document Section 4 - Priority flag)
         if (formData.sbp_mmHg >= 180 || formData.prior_cad) {
             setShowConfirm(true);
             return;
@@ -214,7 +210,7 @@ const HomePage = () => {
         }
     };
 
-    // PDF Generation Function (document Section 13)
+    // PDF Generation Function
     const generatePDF = async () => {
         if (!result) return;
         
@@ -270,6 +266,510 @@ const HomePage = () => {
         }
     };
 
+    // PRINT FUNCTION with better design
+    const handlePrint = () => {
+        if (!result) return;
+        
+        setPrintLoading(true);
+        
+        try {
+            const printContent = document.getElementById('report-content');
+            if (!printContent) {
+                alert('Report content not found');
+                setPrintLoading(false);
+                return;
+            }
+
+            // Create print window
+            const printWindow = window.open('', '_blank', 'width=900,height=700');
+            
+            if (!printWindow) {
+                alert('Please allow pop-ups to print the report');
+                setPrintLoading(false);
+                return;
+            }
+
+            // Write content to print window with enhanced design
+            printWindow.document.write(`
+                <!DOCTYPE html>
+                <html>
+                    <head>
+                        <title>Predyx Assessment Report</title>
+                        <style>
+                            /* Reset and Base */
+                            * {
+                                margin: 0;
+                                padding: 0;
+                                box-sizing: border-box;
+                            }
+                            
+                            body {
+                                font-family: 'Segoe UI', Arial, sans-serif;
+                                padding: 40px;
+                                background: #f5f7fa;
+                                color: #2c3e50;
+                            }
+                            
+                            /* Main Container */
+                            .print-container {
+                                max-width: 1100px;
+                                margin: 0 auto;
+                                background: white;
+                                padding: 50px;
+                                border-radius: 12px;
+                                box-shadow: 0 10px 40px rgba(0,0,0,0.1);
+                            }
+                            
+                            /* Header */
+                            .report-header {
+                                text-align: center;
+                                margin-bottom: 35px;
+                                padding-bottom: 25px;
+                                border-bottom: 3px solid #4CAF50;
+                                position: relative;
+                            }
+                            
+                            .report-header::after {
+                                content: '';
+                                position: absolute;
+                                bottom: -3px;
+                                left: 25%;
+                                width: 50%;
+                                height: 3px;
+                                background: #2e7d32;
+                            }
+                            
+                            .report-header h1 {
+                                color: #1a237e;
+                                font-size: 32px;
+                                font-weight: 700;
+                                margin-bottom: 12px;
+                                letter-spacing: 1px;
+                            }
+                            
+                            .report-header .subtitle {
+                                color: #4CAF50;
+                                font-size: 14px;
+                                font-weight: 600;
+                                text-transform: uppercase;
+                                letter-spacing: 2px;
+                                margin-bottom: 15px;
+                            }
+                            
+                            .report-meta {
+                                display: flex;
+                                justify-content: center;
+                                gap: 30px;
+                                font-size: 13px;
+                                color: #666;
+                                flex-wrap: wrap;
+                            }
+                            
+                            .report-meta span {
+                                background: #f0f2f5;
+                                padding: 6px 18px;
+                                border-radius: 20px;
+                                border: 1px solid #e0e0e0;
+                            }
+                            
+                            /* Score Card */
+                            .score-card {
+                                display: flex;
+                                align-items: center;
+                                justify-content: center;
+                                gap: 60px;
+                                background: linear-gradient(135deg, #1a237e 0%, #283593 50%, #4CAF50 100%);
+                                padding: 35px 50px;
+                                border-radius: 16px;
+                                margin-bottom: 35px;
+                                color: white;
+                                box-shadow: 0 8px 25px rgba(26, 35, 126, 0.3);
+                            }
+                            
+                            .score-big {
+                                text-align: center;
+                            }
+                            
+                            .score-number {
+                                font-size: 56px;
+                                font-weight: 800;
+                                line-height: 1;
+                                text-shadow: 0 2px 10px rgba(0,0,0,0.2);
+                            }
+                            
+                            .score-label {
+                                font-size: 16px;
+                                opacity: 0.9;
+                                margin-top: 5px;
+                                font-weight: 500;
+                            }
+                            
+                            .score-divider {
+                                width: 2px;
+                                height: 60px;
+                                background: rgba(255,255,255,0.3);
+                            }
+                            
+                            .score-details {
+                                display: flex;
+                                flex-direction: column;
+                                gap: 12px;
+                            }
+                            
+                            .band {
+                                padding: 10px 35px;
+                                border-radius: 30px;
+                                font-weight: 700;
+                                font-size: 18px;
+                                text-align: center;
+                                text-transform: uppercase;
+                                letter-spacing: 1px;
+                                background: rgba(255,255,255,0.25);
+                                border: 2px solid rgba(255,255,255,0.5);
+                            }
+                            
+                            .priority {
+                                padding: 8px 30px;
+                                border-radius: 30px;
+                                font-weight: 600;
+                                font-size: 16px;
+                                text-align: center;
+                                background: rgba(255,255,255,0.15);
+                                border: 1px solid rgba(255,255,255,0.3);
+                            }
+                            
+                            /* Warning Banner */
+                            .warning-banner {
+                                background: #fff3e0;
+                                border-left: 5px solid #ff9800;
+                                padding: 18px 25px;
+                                border-radius: 8px;
+                                margin-bottom: 30px;
+                                color: #e65100;
+                            }
+                            
+                            .warning-banner h4 {
+                                font-size: 16px;
+                                margin-bottom: 8px;
+                            }
+                            
+                            .warning-banner p {
+                                font-size: 14px;
+                                margin: 3px 0;
+                            }
+                            
+                            /* Result Grid */
+                            .result-grid {
+                                display: grid;
+                                grid-template-columns: 1fr 1fr;
+                                gap: 25px;
+                                margin-bottom: 30px;
+                            }
+                            
+                            .result-section {
+                                background: #f8faff;
+                                padding: 22px 25px;
+                                border-radius: 12px;
+                                border: 1px solid #e8ecf1;
+                                transition: all 0.3s;
+                            }
+                            
+                            .result-section:hover {
+                                border-color: #4CAF50;
+                            }
+                            
+                            .result-section h3 {
+                                color: #1a237e;
+                                margin-bottom: 15px;
+                                font-size: 17px;
+                                font-weight: 700;
+                                border-bottom: 2px solid #4CAF50;
+                                padding-bottom: 10px;
+                                display: flex;
+                                align-items: center;
+                                gap: 8px;
+                            }
+                            
+                            .result-section.full-width {
+                                grid-column: 1 / -1;
+                            }
+                            
+                            /* Info Grid */
+                            .info-grid {
+                                display: grid;
+                                grid-template-columns: 1fr 1fr;
+                                gap: 8px 20px;
+                            }
+                            
+                            .info-grid div {
+                                padding: 6px 0;
+                                font-size: 14px;
+                                border-bottom: 1px dashed #f0f0f0;
+                            }
+                            
+                            .info-grid div:last-child {
+                                border-bottom: none;
+                            }
+                            
+                            .info-grid strong {
+                                color: #37474f;
+                                font-weight: 600;
+                            }
+                            
+                            /* Measurements Grid */
+                            .measurements-grid {
+                                display: grid;
+                                grid-template-columns: 1fr 1fr 1fr;
+                                gap: 8px 15px;
+                            }
+                            
+                            .measurements-grid div {
+                                padding: 6px 0;
+                                font-size: 13px;
+                                border-bottom: 1px dashed #f0f0f0;
+                            }
+                            
+                            .measurements-grid strong {
+                                color: #37474f;
+                                font-weight: 600;
+                            }
+                            
+                            /* Domain Grid */
+                            .domain-grid {
+                                display: grid;
+                                grid-template-columns: 1fr 1fr;
+                                gap: 10px;
+                            }
+                            
+                            .domain-item {
+                                display: flex;
+                                justify-content: space-between;
+                                padding: 10px 15px;
+                                background: white;
+                                border-radius: 8px;
+                                border: 1px solid #e8ecf1;
+                                font-size: 14px;
+                            }
+                            
+                            .domain-value {
+                                font-weight: 700;
+                                color: #4CAF50;
+                            }
+                            
+                            /* Drivers List */
+                            .drivers-list {
+                                display: flex;
+                                flex-direction: column;
+                                gap: 8px;
+                            }
+                            
+                            .driver-item {
+                                display: flex;
+                                justify-content: space-between;
+                                padding: 10px 15px;
+                                background: white;
+                                border-radius: 8px;
+                                border: 1px solid #e8ecf1;
+                                font-size: 14px;
+                            }
+                            
+                            .driver-name {
+                                font-weight: 500;
+                            }
+                            
+                            .driver-points {
+                                font-weight: 700;
+                                color: #d32f2f;
+                            }
+                            
+                            /* Interpretation */
+                            .interpretation-text {
+                                line-height: 1.8;
+                                font-size: 14.5px;
+                                padding: 15px 20px;
+                                background: white;
+                                border-radius: 8px;
+                                border: 1px solid #e8ecf1;
+                                color: #37474f;
+                            }
+                            
+                            /* Recommendations */
+                            .recommendations-list {
+                                list-style: none;
+                                padding: 0;
+                            }
+                            
+                            .recommendations-list li {
+                                padding: 12px 18px 12px 45px;
+                                background: white;
+                                margin-bottom: 8px;
+                                border-radius: 8px;
+                                border: 1px solid #e8ecf1;
+                                position: relative;
+                                font-size: 14px;
+                            }
+                            
+                            .recommendations-list li:before {
+                                content: "💡";
+                                position: absolute;
+                                left: 15px;
+                                font-size: 18px;
+                            }
+                            
+                            /* Footer */
+                            .report-footer {
+                                margin-top: 35px;
+                                padding-top: 25px;
+                                border-top: 2px solid #e8ecf1;
+                                text-align: center;
+                            }
+                            
+                            .report-footer .disclaimer {
+                                font-size: 13px;
+                                color: #666;
+                                margin-bottom: 8px;
+                                background: #f8f9fa;
+                                padding: 10px;
+                                border-radius: 8px;
+                            }
+                            
+                            .report-footer .engine-info {
+                                font-size: 12px;
+                                color: #999;
+                            }
+                            
+                            /* Badge */
+                            .badge {
+                                display: inline-block;
+                                padding: 3px 12px;
+                                border-radius: 12px;
+                                font-size: 12px;
+                                font-weight: 600;
+                                background: #e8f5e9;
+                                color: #2e7d32;
+                            }
+                            
+                            /* Watermark */
+                            .watermark {
+                                position: fixed;
+                                bottom: 20px;
+                                right: 20px;
+                                opacity: 0.05;
+                                font-size: 60px;
+                                font-weight: 900;
+                                color: #1a237e;
+                                pointer-events: none;
+                                z-index: -1;
+                            }
+                            
+                            /* Print Styles */
+                            @media print {
+                                body {
+                                    background: white;
+                                    padding: 15px;
+                                }
+                                
+                                .print-container {
+                                    box-shadow: none;
+                                    padding: 30px;
+                                    border-radius: 0;
+                                }
+                                
+                                .result-section {
+                                    break-inside: avoid;
+                                    page-break-inside: avoid;
+                                }
+                                
+                                .score-card {
+                                    break-inside: avoid;
+                                    page-break-inside: avoid;
+                                }
+                                
+                                .result-grid {
+                                    break-inside: avoid;
+                                }
+                            }
+                            
+                            /* Responsive */
+                            @media (max-width: 768px) {
+                                .result-grid {
+                                    grid-template-columns: 1fr;
+                                }
+                                
+                                .measurements-grid {
+                                    grid-template-columns: 1fr 1fr;
+                                }
+                                
+                                .info-grid {
+                                    grid-template-columns: 1fr;
+                                }
+                                
+                                .score-card {
+                                    flex-direction: column;
+                                    gap: 25px;
+                                    padding: 25px;
+                                }
+                                
+                                .score-divider {
+                                    display: none;
+                                }
+                                
+                                .report-meta {
+                                    flex-direction: column;
+                                    gap: 10px;
+                                    align-items: center;
+                                }
+                                
+                                .domain-grid {
+                                    grid-template-columns: 1fr;
+                                }
+                                
+                                body {
+                                    padding: 15px;
+                                }
+                                
+                                .print-container {
+                                    padding: 20px;
+                                }
+                            }
+                            
+                            /* Print specific adjustments */
+                            @media print {
+                                .print-container {
+                                    box-shadow: none !important;
+                                }
+                            }
+                        </style>
+                    </head>
+                    <body>
+                        <div class="print-container">
+                            ${printContent.innerHTML}
+                            <div class="watermark">PREDYX</div>
+                        </div>
+                        <script>
+                            window.onload = function() {
+                                setTimeout(function() {
+                                    window.print();
+                                    setTimeout(function() {
+                                        window.close();
+                                    }, 1000);
+                                }, 500);
+                            };
+                        <\/script>
+                    </body>
+                </html>
+            `);
+            
+            printWindow.document.close();
+            
+        } catch (error) {
+            console.error('Print error:', error);
+            alert('Failed to print report. Please try again.');
+        } finally {
+            setPrintLoading(false);
+        }
+    };
+
     const resetForm = () => {
         setFormData({
             patient_name: '',
@@ -319,7 +819,7 @@ const HomePage = () => {
         }
     };
 
-    // Render Result Screen (document Section 12 - Results Screen Specification)
+    // Render Result Screen
     if (showResult && result) {
         const rawInputs = result.raw_inputs || {};
         const derived = result.derived || {};
@@ -353,19 +853,17 @@ const HomePage = () => {
                         </div>
                     </div>
 
-                    {/* Score Card - PBS Score, Risk Band, Priority */}
+                    {/* Score Card */}
                     <div className="score-card">
                         <div className="score-big">
                             <div className="score-number">{result.predyx_pbs || 0}</div>
                             <div className="score-label">PBS Score</div>
                         </div>
+                        <div className="score-divider"></div>
                         <div className="score-details">
                             <div className="band" style={{ 
                                 background: getBandColor(result.risk_band),
                                 color: 'white',
-                                padding: '5px 20px',
-                                borderRadius: '20px',
-                                fontWeight: '600'
                             }}>
                                 {result.risk_band || 'Unknown'}
                             </div>
@@ -484,7 +982,7 @@ const HomePage = () => {
 
                     {/* Footer with disclaimer */}
                     <div className="report-footer">
-                        <p>⚠️ This is a screening report, not a diagnosis. Please consult your doctor for medical advice.</p>
+                        <p className="disclaimer">⚠️ This is a screening report, not a diagnosis. Please consult your doctor for medical advice.</p>
                         <p className="engine-info">Engine: Predyx Quick v1.0 | Assessment ID: {result.assessment_code || result.assessment_id || 'N/A'}</p>
                     </div>
                 </div>
@@ -496,6 +994,13 @@ const HomePage = () => {
                         disabled={pdfLoading}
                     >
                         {pdfLoading ? '⏳ Generating PDF...' : '📥 Download PDF Report'}
+                    </button>
+                    <button 
+                        onClick={handlePrint} 
+                        className="btn-print"
+                        disabled={printLoading}
+                    >
+                        {printLoading ? '⏳ Loading...' : '🖨️ Print Report'}
                     </button>
                     <button onClick={resetForm} className="btn-new">
                         New Assessment
