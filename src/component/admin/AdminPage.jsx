@@ -225,7 +225,7 @@ const AdminPage = () => {
         <div className="inner">
           <h3>{value}</h3>
           <p>{title}</p>
-          {subtitle && <small className="text-white">{subtitle}</small>}
+     
         </div>
         <div className="icon">
           <i className={`fas fa-${icon}`}></i>
@@ -263,7 +263,7 @@ const AdminPage = () => {
     <div className="content-wrapper">
       <div className="content-header">
         <div className="container-fluid">
-          <div className="row mb-2">
+          <div className="row ">
             <div className="col-sm-6">
               <h1 className="m-0">
                 <FaHeartbeat className="text-danger mr-2" />
@@ -420,86 +420,7 @@ const AdminPage = () => {
           </div>
 
           {/* Recent Activities and Doctor Performance */}
-          <div className="row">
-            <div className="col-md-7">
-              <div className="card">
-                <div className="card-header">
-                  <h3 className="card-title">
-                    <FaClock className="text-warning mr-2" />
-                    Recent Activities
-                  </h3>
-                </div>
-                <div className="card-body p-0">
-                  <ul className="timeline">
-                    {recentActivities.map(activity => (
-                      <li key={activity.id}>
-                        <i className={`fas fa-${activity.icon} bg-${activity.type === 'patient' ? 'success' : 
-                          activity.type === 'appointment' ? 'info' : 
-                          activity.type === 'payment' ? 'warning' : 
-                          activity.type === 'prescription' ? 'primary' : 'secondary'}`} />
-                        <div className="timeline-item">
-                          <span className="time">
-                            <i className="fas fa-clock" /> {activity.time}
-                          </span>
-                          <h3 className="timeline-header">
-                            <a href="#">System</a> {activity.text}
-                          </h3>
-                        </div>
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-                <div className="card-footer">
-                  <a href="#" className="btn btn-primary btn-block">
-                    View All Activities
-                  </a>
-                </div>
-              </div>
-            </div>
-
-            <div className="col-md-5">
-              <div className="card">
-                <div className="card-header">
-                  <h3 className="card-title">
-                    <FaStar className="text-warning mr-2" />
-                    Top Doctors
-                  </h3>
-                </div>
-                <div className="card-body p-0">
-                  <table className="table table-striped">
-                    <thead>
-                      <tr>
-                        <th>Doctor Name</th>
-                        <th>Patients</th>
-                        <th>Rating</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      {doctorPerformance.map((doctor, index) => (
-                        <tr key={index}>
-                          <td>
-                            <FaUserMd className="text-info mr-2" />
-                            {doctor.name}
-                          </td>
-                          <td>{doctor.patients}</td>
-                          <td>
-                            <span className="badge badge-warning">
-                              ⭐ {doctor.rating}
-                            </span>
-                          </td>
-                        </tr>
-                      ))}
-                    </tbody>
-                  </table>
-                </div>
-                <div className="card-footer">
-                  <a href="#" className="btn btn-primary btn-block">
-                    View All Doctors
-                  </a>
-                </div>
-              </div>
-            </div>
-          </div>
+        
 
           {/* Quick Actions */}
           <div className="row">
@@ -511,40 +432,40 @@ const AdminPage = () => {
                     Quick Actions
                   </h3>
                 </div>
-                <div className="card-body">
+                <div className="card-body belos">
                   <div className="row">
                     <div className="col-md-2 col-6">
-                      <a href="#" className="btn btn-info btn-block btn-lg">
+                      <a href="#" className="mts btn btn-info btn-block btn-lg">
                         <FaUserPlus className="d-block mb-1" />
                         New Patient
                       </a>
                     </div>
                     <div className="col-md-2 col-6">
-                      <a href="#" className="btn btn-success btn-block btn-lg">
+                      <a href="#" className="mts btn btn-success btn-block btn-lg">
                         <FaCalendarCheck className="d-block mb-1" />
                         Book Appointment
                       </a>
                     </div>
                     <div className="col-md-2 col-6">
-                      <a href="#" className="btn btn-warning btn-block btn-lg">
+                      <a href="#" className="mts btn btn-warning btn-block btn-lg">
                         <FaPrescription className="d-block mb-1" />
                         Prescription
                       </a>
                     </div>
                     <div className="col-md-2 col-6">
-                      <a href="#" className="btn btn-danger btn-block btn-lg">
+                      <a href="#" className="mts btn btn-danger btn-block btn-lg">
                         <FaAmbulance className="d-block mb-1" />
                         Emergency
                       </a>
                     </div>
                     <div className="col-md-2 col-6">
-                      <a href="#" className="btn btn-primary btn-block btn-lg">
+                      <a href="#" className="mts btn btn-primary btn-block btn-lg">
                         <FaFileMedical className="d-block mb-1" />
                         Medical Records
                       </a>
                     </div>
                     <div className="col-md-2 col-6">
-                      <a href="#" className="btn btn-secondary btn-block btn-lg">
+                      <a href="#" className="mts btn btn-secondary btn-block btn-lg">
                         <FaClipboardList className="d-block mb-1" />
                         Reports
                       </a>

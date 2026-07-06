@@ -4,13 +4,92 @@
 .content-wrapper {
   min-height: calc(100vh - 56px - 57px);
 }
-
-/* Custom navbar styles */
-.main-header .navbar-nav .nav-link {
-  color: rgba(0, 0, 0, 0.6);
-  transition: color 0.3s ease;
+.main-sidebar {
+    height: 100vh;
+    overflow-y: hidden;
+    z-index: 1038;
+    background-color: #34485f !important; 
 }
 
+.nav-pills .nav-link {
+    display: block;
+    padding: 8px 9px;font-size: 15px;
+}
+.nav-sidebar .nav-item>.nav-link {
+    margin-bottom: .2rem;
+    color: #fff !important;
+}
+.small-box.bg-info {
+    background: linear-gradient(135deg, #34daff, #42a4fe);
+}
+.small-box.bg-success {
+    background: linear-gradient(135deg, #34daff, #42a4fe);
+}
+.small-box.bg-warning {
+    background: linear-gradient(135deg, #34daff, #42a4fe);
+}
+.small-box.bg-danger {
+    background: linear-gradient(135deg, #34daff, #42a4fe);
+}
+.small-box.bg-secondary {
+    background: linear-gradient(135deg, #34daff, #42a4fe);
+} .small-box>.inner {
+    padding: 20px 10px;
+}
+.content-header h1 {
+    font-size: 21px;
+    margin: 0;
+    font-weight: 600;
+}.breadcrumb-item {
+    float: left;
+    font-size: 14px;
+    font-weight: 600;
+}.breadcrumb-item+.breadcrumb-item {
+    padding-left: 0rem;
+}
+.card-title {
+    float: left;
+    font-size: 1.1rem;
+    font-weight: 600 !important;
+    margin: 0;
+}
+
+    .small-box h3{    font-size: 2rem !important;}
+.small-box p { font-size:15px; font-weight:600 }
+        .small-box h3, .small-box p {
+    color: #005992 !important; margin: 0px;
+}.small-box>.small-box-footer {
+    background-color: rgb(52 72 95);
+    color: rgba(255, 255, 255, .8);
+    display: block;
+    padding: 9px 0;
+    position: relative;
+    text-align: center;
+    text-decoration: none;
+    z-index: 10;
+    font-size: 14px;
+}.bg-warning, .bg-warning>a {
+    color: #fff !important;
+}.small-box .icon>i.fa, .small-box .icon>i.fab, .small-box .icon>i.fad, .small-box .icon>i.fal, .small-box .icon>i.far, .small-box .icon>i.fas, .small-box .icon>i.ion {
+    font-size: 49px;
+    top: 30px;
+}
+.nav-sidebar>.nav-item .nav-icon {
+  
+    font-size: 14px !important;
+}
+.brand-link {
+    padding: 10px 24px !important;
+}
+/* Custom navbar styles */
+.main-header .navbar-nav .nav-link {
+    color: #fff;
+    transition: color 0.3s ease;
+}
+.navbar-white {
+    background: linear-gradient(135deg, #1a6db9, #1a6db9);
+    color: #1f2d3d;
+}
 .main-header .navbar-nav .nav-link:hover {
   color: #333;
 }

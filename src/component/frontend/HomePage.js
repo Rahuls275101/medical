@@ -4,7 +4,6 @@ import { apiBaseUrl } from '../../config';
 import axios from 'axios';
 import jsPDF from 'jspdf';
 import html2canvas from 'html2canvas';
-import './PredyxAssessment.css';
 
 
 const HomePage = () => {

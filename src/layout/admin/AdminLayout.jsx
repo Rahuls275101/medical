@@ -7,7 +7,7 @@ import Footer from "./Footer";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import '@fortawesome/fontawesome-free/css/all.min.css';
 import 'admin-lte/dist/css/adminlte.min.css';
-
+import './AdminLayout.css';
 
 import 'jquery';
 import 'popper.js';

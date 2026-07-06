@@ -4,6 +4,8 @@ import { baseUrl } from '../../config';
 import { useLocation, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import './Login.css';
+import logo from './logo.png';
+import bg from "./login-bg-3.jpg";
 
 const Login = ({ onLogin }) => {
   const [authenticated, setAuthenticated] = useState(false);
@@ -169,13 +171,20 @@ const Login = ({ onLogin }) => {
       <Helmet>
         <title>Login - Admin Panel</title>
       </Helmet>
-
+<div style={{
+    backgroundImage: `url(${bg})`
+  }}>
+   <div className="login-over">
       <div className="login-container">
         <div className="login-wrapper">
           <div className="login-card">
             <div className="login-header">
-              <div className="brand-icon">
-                <i className="fas fa-user-shield"></i>
+              <div className="brand-icon1">
+               <img
+  src={logo}
+  alt="AdminLTE Logo"
+  className=""
+/>
               </div>
               <h2>Welcome Back</h2>
               <p className="login-subtitle">Sign in to continue to your dashboard</p>
@@ -279,10 +288,10 @@ const Login = ({ onLogin }) => {
           </div>
 
           <div className="login-footer-text">
-            <p>&copy; 2026 Admin Panel. All rights reserved.</p>
+            <p>&copy; 2026 PredyxIQ. All rights reserved.</p>
           </div>
         </div>
-      </div>
+      </div></div></div>
     </>
   );
 };

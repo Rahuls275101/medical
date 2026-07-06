@@ -1,23 +1,28 @@
 /* Login.css */
 
 .login-page {
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    background: linear-gradient(135deg, #00d8ff 0%, #0071d8 100%);
     min-height: 100vh;
     margin: 0;
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    display: inline;
+    background-size: cover;
   }
   
-  .login-container {
+.login-container {
     display: flex;
-    justify-content: center;
-    align-items: center;
+    justify-content: end;
+    align-items: end;
     min-height: 100vh;
     padding: 20px;
-  }
+    width: 530px;
+    margin-left: auto;
+    margin-right: 85px;
+}
   
   .login-wrapper {
     width: 100%;
-    max-width: 420px;
+    max-width: 520px;
   }
   
   .login-card {
@@ -39,12 +44,12 @@
     }
   }
   
-  .login-header {
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-    padding: 40px 30px 30px;
+ .login-header {
+    background: #e2f9ff;
+    padding: 24px 30px 20px;
     text-align: center;
     color: white;
-  }
+}
   
   .brand-icon {
     width: 70px;
@@ -58,20 +63,26 @@
     font-size: 30px;
     backdrop-filter: blur(10px);
   }
-  
+.brand-icon1 {
+    margin-bottom: 15px;
+}
+.brand-icon1 img{ height:50px }
   .login-header h2 {
     margin: 0;
-    font-weight: 600;
-    font-size: 24px;
-    letter-spacing: 0.5px;
-  }
+    font-weight: 700;
+    font-size: 23px;
+    letter-spacing: 0px;
+    color: #000 !important;
+    margin-top: 18px;
+}
   
-  .login-subtitle {
-    margin: 5px 0 0;
+.login-subtitle {
+    margin: 4px 0 0;
     opacity: 0.9;
-    font-size: 14px;
-  }
-  
+    font-size: 13px;
+    color: #000 !important;
+    font-weight: 500;
+}
   .login-body {
     padding: 30px;
   }
@@ -90,7 +101,7 @@
   
   .form-label i {
     margin-right: 8px;
-    color: #667eea;
+    color: #00d8ff;
   }
   
   .input-wrapper {
@@ -110,7 +121,7 @@
   
   .form-input:focus {
     outline: none;
-    border-color: #667eea;
+    border-color: #00d8ff;
     background: white;
     box-shadow: 0 0 0 4px rgba(102, 126, 234, 0.1);
   }
@@ -144,7 +155,7 @@
   }
   
   .password-toggle:hover {
-    color: #667eea;
+    color: #00d8ff;
   }
   
   .error-message {
@@ -167,7 +178,7 @@
     margin: 20px 0 25px;
   }
   
-  .checkbox-label {
+ .checkbox-label {
     display: flex;
     align-items: center;
     gap: 10px;
@@ -176,7 +187,10 @@
     color: #555;
     position: relative;
     padding-left: 5px;
-  }
+    padding: 0px;
+    background: transparent;
+    border: 0px;
+}
   
   .checkbox-label input {
     display: none;
@@ -194,8 +208,8 @@
   }
   
   .checkbox-label input:checked + .checkmark {
-    background: #667eea;
-    border-color: #667eea;
+    background: #00d8ff;
+    border-color: #00d8ff;
   }
   
   .checkbox-label input:checked + .checkmark::after {
@@ -209,7 +223,7 @@
   }
   
   .forgot-link {
-    color: #667eea;
+    color: #00d8ff;
     text-decoration: none;
     font-size: 14px;
     font-weight: 500;
@@ -217,14 +231,14 @@
   }
   
   .forgot-link:hover {
-    color: #764ba2;
+    color: #0071d8;
     text-decoration: underline;
   }
   
   .login-button {
     width: 100%;
     padding: 14px;
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    background: linear-gradient(135deg, #00d8ff 0%, #0071d8 100%);
     color: white;
     border: none;
     border-radius: 10px;
@@ -280,14 +294,14 @@
   }
   
   .register-link {
-    color: #667eea;
+    color: #00d8ff;
     text-decoration: none;
     font-weight: 600;
     transition: color 0.3s ease;
   }
   
   .register-link:hover {
-    color: #764ba2;
+    color: #0071d8;
     text-decoration: underline;
   }
   

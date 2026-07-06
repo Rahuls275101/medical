@@ -4,7 +4,7 @@ import { apiBaseUrl } from '../../config';
 import axios from 'axios';
 import jsPDF from 'jspdf';
 import html2canvas from 'html2canvas';
-import './PredyxAssessment.css';
+
 
 const PredyxAssessment = () => {
     // Form state - ALL fields from document
@@ -513,7 +513,7 @@ const PredyxAssessment = () => {
                 <p>Preventive Cardiometabolic Burden Screening</p>
             </div>
 
-            <div className="progress-bar">
+            <div className="progress-bar1">
                 <div className="progress-steps">
                     {[1, 2, 3, 4].map(step => (
                         <div key={step} className={`step ${step === currentStep ? 'active' : ''} ${step < currentStep ? 'completed' : ''}`}>
