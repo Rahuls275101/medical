@@ -1,5 +1,5 @@
 // Configurations for different paths
-const baseUrl = ''; 
-const apiBaseUrl = 'http://103.186.185.28:3000/api/admin'; // Replace with your API base URL
-const apiUrl = 'http://103.186.185.28:3000'; 
+const baseUrl = 'http://localhost:3000'; 
+const apiBaseUrl = 'https://api.genxmedicaldevices.com/api/admin'; // Replace with your API base URL
+const apiUrl = 'https://api.genxmedicaldevices.com'; 
 export { baseUrl,apiBaseUrl,apiUrl };

@@ -111,7 +111,7 @@ const Login = ({ onLogin }) => {
         }
         
         // Navigate to dashboard
-        navigate(baseUrl);
+        navigate();
       } else {
         console.log('Login failed: ' + (response.data.message || 'Invalid credentials'));
         setAuthenticated(false);
