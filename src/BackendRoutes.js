@@ -32,7 +32,7 @@ const BackendRoutes = () => {
     // Perform authentication logic here (not shown in the provided code)
     localStorage.setItem('authenticated', 'true');
     setAuthenticated(true);
-    navigate(baseUrl); // Redirect to dashboard after login
+    navigate('/admin');// Redirect to dashboard after login
   };
 
   const handleLogout = () => {
@@ -43,7 +43,7 @@ const BackendRoutes = () => {
     localStorage.removeItem('authenticated');
 
     // Redirect to the home page or any other desired location
-    navigate(baseUrl+'/admin');
+    navigate('/admin');
   };
 
   const PrivateRoute = ({ path, element }) => {

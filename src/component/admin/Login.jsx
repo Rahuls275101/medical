@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Helmet } from 'react-helmet-async';
-import { baseUrl } from '../../config'; 
+import { baseUrl,apiBaseUrl } from '../../config'; 
 import { useLocation, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import './Login.css';
@@ -72,7 +72,7 @@ const Login = ({ onLogin }) => {
     setIsLoading(true);
 
     try {
-      const response = await axios.post('http://103.186.185.28:3000/api/admin/login', {
+      const response = await axios.post(apiBaseUrl +'/login', {
         email: email,
         password: password
       });

@@ -93,10 +93,10 @@ function Header() {
                 <Link to={baseUrl + '/'}>Predyx IQ </Link>
                 </li>
                 <li>
-                <Link to={baseUrl + 'about'}>About Us</Link>
+                <Link to={baseUrl + '/about'}>About Us</Link>
                 </li>
                 <li>
-                <Link to={baseUrl + 'contact'}>Contact</Link>
+                <Link to={baseUrl + '/contact'}>Contact</Link>
                 </li>
               </ul>
             </nav>
