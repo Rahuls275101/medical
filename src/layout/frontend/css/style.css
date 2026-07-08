@@ -4,7 +4,154 @@
   padding: 0;
   box-sizing: border-box;
 }
+.engine-section {
+    padding: 70px 0px;
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+    background: #f1f1f1;
+}
 
+.engine-content {
+  max-width: 1200px;
+  width: 100%;
+  margin: 0 auto;
+}
+
+/* Eyebrow */
+.engine-eyebrow {
+    color: #34485f;
+    font-size: 14px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    margin: 0 0 12px 0;
+    font-weight: 700;
+}
+
+/* Headline */
+.engine-headline {
+    color: #1A1410;
+    font-size: 40px;
+    font-weight: 500;
+    line-height: 1.15;
+    letter-spacing: -0.02em;
+    margin: 0 0 20px 0;
+    max-width: 900px; margin: auto; margin-bottom: 15px;
+}
+
+.engine-highlight-italic {
+  color: #4a93d9;
+}
+
+
+
+/* Layers container */
+.engine-layers {
+  width: 100%; margin-top: 40px;
+}
+
+.engine-layer-row {
+    /* padding: 32px 0; */
+    border-top: 1px solid rgba(255, 255, 255, 0.05);
+    width: 48%;
+    margin-bottom: 20px;
+    display: inline-block;
+    margin: 0px 1%;
+}
+.engine-layer-row:first-of-type {
+  border-top: none;
+  padding-top: 0;
+}
+
+/* Inner flex: numeral + accent line + content */
+.engine-layer-inner {
+    display: flex;
+    align-items: flex-start;
+    gap: 0;
+    padding: 20px;
+    background: #fff;
+    box-shadow: 0px 0px 15px #dfdfdf; margin-bottom: 20px;
+}
+
+/* Numeral */
+.engine-numeral {
+  font-size: 38px;
+  font-weight: 300;
+  color: #2A2520;
+  width: 48px;
+  text-align: right;
+  flex-shrink: 0;
+  margin-right: 32px;
+  line-height: 1.2;
+}
+
+.engine-numeral.gold {
+  color: #000;
+}
+
+/* Vertical accent line */
+.engine-accent-line {
+  width: 2px;
+  background-color: #2A2520;
+  flex-shrink: 0;
+  align-self: stretch;
+  margin-right: 30px;
+  min-height: 100%;
+}
+
+.engine-accent-line.gold {
+  background-color: #4a93d9;
+}
+
+/* Content block */
+.engine-layer-content {
+  flex: 1;
+  padding-left: 0;
+  margin-left: 0;
+}
+
+/* Layer title */
+.engine-layer-title {
+    font-size: 22px;
+    font-weight: 600;
+    color: #000;
+    margin: 0 0 3px 0;
+    letter-spacing: 0;
+}
+
+.engine-layer-title.gold {
+  color: #000;
+}
+
+/* Layer body */
+.engine-layer-body {
+  font-size: 14px;
+  color: #6B6058;
+  line-height: 1.68;
+  max-width: 600px;
+  margin: 0;
+}
+
+/* Responsive */
+@media (max-width: 600px) {
+  .engine-section {
+    padding: 64px 20px;
+  }
+  
+  .engine-numeral {
+    font-size: 32px;
+    width: 36px;
+    margin-right: 20px;
+  }
+  
+  .engine-layer-row {
+    padding: 24px 0;
+  }
+  
+  .engine-body-text {
+    font-size: 16px;
+  }
+}
 body {
   font-family: "Manrope", sans-serif !important;
   color: #333;
@@ -2664,3 +2811,274 @@ footer {
   }
 }
 
+.hero-section {
+    background: #fff;
+    overflow: hidden;
+}
+
+.hero-content {
+    position: relative;
+    min-height: 550px;
+    display: flex;
+    align-items: center;
+    padding: 0 90px;
+}
+
+
+.hero-content  .content {
+    position: relative;
+    z-index: 5;
+    max-width: 470px;
+}
+
+.hero-content .content h1 {
+    font-size: 45px;
+    font-weight: 700;
+    color: #111;
+    line-height: 1.19;
+    margin-bottom: 19px;
+}
+
+.hero-content .content p {
+    color: #555;
+    font-size: 16px;
+    line-height: 1.5;
+    margin-bottom: 35px;
+}
+
+.hero-content .hero-btn {
+    background: linear-gradient(90deg, #0088cc, #0b5ed7);
+    border: none;
+    border-radius: 50px;
+    padding: 15px 33px;
+    font-size: 14px;
+    font-weight: 600;
+    color: #fff;
+    transition: .3s;
+}
+
+.hero-content .hero-btn:hover {
+    background: linear-gradient(90deg, #0b5ed7, #0088cc);
+    color: #fff;
+}
+
+.hero-content .hero-image {
+    width: 100%;
+    height: 680px;
+    object-fit: cover;
+}
+
+@media (max-width:991px){
+
+.hero-content .hero-content{
+    min-height:auto;
+    padding:60px 30px;
+}
+
+.hero-content .hero-content::after{
+    display:none;
+}
+
+.hero-content .content{
+    max-width:100%;
+}
+
+.hero-content .content h1{
+    font-size:42px;
+}
+
+.hero-content .content p{
+    font-size:18px;
+}
+
+.hero-content .hero-image{
+    height:auto;
+}
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+.philosophy-section {
+    padding: 80px 0px;
+    background: linear-gradient(135deg, #05a7cb, #1c65a9);
+}
+
+        .philosophy-container {
+          max-width: 1200px;
+          margin: 0 auto;
+        }
+
+        /* Two-column grid */
+        .philosophy-grid {
+          display: grid;
+          grid-template-columns: 1fr 1fr;
+          gap: 80px;
+          align-items: start;
+        }
+
+        /* Left Column */
+        .philosophy-left {
+          display: flex;
+          flex-direction: column;
+          gap: 24px;
+        }
+
+        .philosophy-text {
+    color: #fff;
+    font-size: 17px;
+    line-height: 1.6;
+    margin: 0;
+    font-weight: 500;
+    letter-spacing: 0;
+}
+
+        .philosophy-text:last-child {
+    color: #fff;
+    font-weight: 600;
+    font-size: 25px;
+    line-height: 1.5;
+}
+
+        /* Right Column - Explainability */
+        .philosophy-right {
+          display: flex;
+          flex-direction: column;
+          gap: 24px;
+        }
+
+        .explainability-label {
+    color: #fff;
+    font-size: 12px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    margin-bottom: 3px;
+}
+
+        .explainability-statement {
+    background: rgb(255 255 255 / 12%);
+    border-left: 2px solid #006ea1;
+    padding: 17px 20px;
+    border-radius: 4px;
+}
+
+        .doctor-question {
+          display: block;
+          color: #F5F0E8;
+          font-size: 24px;
+          font-weight: 600;
+          margin-bottom: 20px;
+          letter-spacing: -0.01em;
+        }
+
+        .explainability-list {
+          list-style: none;
+          padding: 0;
+          margin: 0;
+          display: flex;
+          flex-direction: column;
+        }
+
+        .explainability-list li {
+          color: #fff;
+          font-size: 15px;
+          line-height: 1.6;
+          display: flex;
+          align-items: flex-start;
+          transition: color 0.3s ease;
+        }
+
+        .explainability-list li:hover {
+          color: #F5F0E8;
+        }
+
+        .bullet-point {
+    margin-right: 9px;
+    color: #fff;
+    font-size: 18px;
+    flex-shrink: 0;
+    margin-top: 1px;
+}
+
+        /* Responsive - Mobile */
+        @media (max-width: 768px) {
+          .philosophy-section {
+            padding: 60px 20px;
+          }
+
+          .philosophy-grid {
+            grid-template-columns: 1fr;
+            gap: 48px;
+          }
+
+          /* Mobile order: blockquote first, then body, then explainability */
+          .philosophy-left {
+            order: 2;
+          }
+
+          .philosophy-right {
+            order: 1;
+          }
+
+          .philosophy-text {
+            font-size: 16px;
+          }
+
+          .philosophy-text:last-child {
+            font-size: 18px;
+          }
+
+          .explainability-statement {
+            padding: 20px 24px;
+          }
+
+          .doctor-question {
+            font-size: 20px;
+          }
+
+          .explainability-list li {
+            font-size: 14px;
+          }
+        }
+
+        @media (max-width: 480px) {
+          .philosophy-section {
+            padding: 40px 16px;
+          }
+
+          .philosophy-grid {
+            gap: 32px;
+          }
+
+          .explainability-statement {
+            padding: 16px 20px;
+          }
+
+          .doctor-question {
+            font-size: 18px;
+            margin-bottom: 16px;
+          }
+
+          .explainability-list {
+            gap: 10px;
+          }
+
+          .explainability-list li {
+            font-size: 13px;
+          }
+
+          .bullet-point {
+            font-size: 16px;
+          }
+        }
+     

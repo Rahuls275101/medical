@@ -4,6 +4,7 @@ import CountUp from "react-countup";
 import { useInView } from "react-intersection-observer";
 
 import logo from "./logo.png";
+import heroImg from "./../../images/slide1-1.jpg";
 import about from "./../../images/about2.jpg";
 import about2 from "./../../images/about2.png";
 import bgImage from "./../../images/figure2.jpg";
@@ -12,7 +13,7 @@ import person1 from "./../../images/testimonial3.jpg";
 import person2 from "./../../images/testimonial3.jpg";
 import person3 from "./../../images/testimonial3.jpg";
 
-const AboutPage = () => {
+const MainPage = () => {
   const carouselRef = useRef(null);
   const isCarouselInitialized = useRef(false);
 
@@ -97,26 +98,31 @@ const AboutPage = () => {
         <title>About US - My Website</title>
       </Helmet>
 
-      <section 
-        className="inner-page-banner bg-common inner-page-top-margin" 
+      <section className="hero-section"
         style={{
-          backgroundImage: `url(${bgImage})`,
+          backgroundImage: `url(${heroImg})`,
           backgroundSize: "cover",
           backgroundPosition: "center",
           backgroundRepeat: "no-repeat",
         }}
       >
-        <div className="container">
-          <div className="row">
-            <div className="col-12">
-              <div className="breadcrumbs-area">
-                <h1>About Us</h1>
-                <ul>
-                  <li>
-                    <a href="index-2.html">Home</a>
-                  </li>
-                  <li>About us</li>
-                </ul>
+        <div className="container p-0">
+          <div className="row g-0 align-items-center">
+            <div className="col-lg-5 hero-content">
+              <div className="content">
+                <h1>
+                  We take care of your
+                  <br />
+                  healthy health.
+                </h1>
+                <p>
+                  Simply dummy text of the printing typesetting ipsum dolor
+                  consecte dipiscing.
+                </p>
+                <a href="/" className="btn btn-primary hero-btn">
+                  READ MORE
+                  <i className="bi bi-chevron-right ms-2"></i>
+                </a>
               </div>
             </div>
           </div>
@@ -129,25 +135,29 @@ const AboutPage = () => {
             <div className="col-lg-6">
               <div className="about-box-layout13">
                 <h2 className="item-title"><span>
-                  The Story, The Idea,<br />What We Believe</span>
+                  The story, the idea,<br />What we believe</span>
                 </h2>
                 <p>
                   Prevention begins with recognition. — Disease leaves
-evidence long before it has a name. Recognising that
-evidence earlier is the single greatest unclaimed
-opportunity in medicine.</p>
-<p>Intelligence should be explainable. — A recommendation a
-physician cannot trace back to a reason is not
-intelligence. It is a guess wearing a lab coat.</p>
-<p>Technology should strengthen physicians, not replace
-them. — Clinical judgement includes empathy, context, and
-values that no algorithm should attempt to reproduce.</p>
-<p>Intelligence should scale. People don't. — The same
-principles that understand one patient can understand a
-clinic, a workforce, a portfolio, or a population.</p>
-
-                
-               
+                  evidence long before it has a name. Recognising that
+                  evidence earlier is the single greatest unclaimed
+                  opportunity in medicine.
+                </p>
+                <p>
+                  Intelligence should be explainable. — A recommendation a
+                  physician cannot trace back to a reason is not
+                  intelligence. It is a guess wearing a lab coat.
+                </p>
+                <p>
+                  Technology should strengthen physicians, not replace
+                  them. — Clinical judgement includes empathy, context, and
+                  values that no algorithm should attempt to reproduce.
+                </p>
+                <p>
+                  Intelligence should scale. People don't. — The same
+                  principles that understand one patient can understand a
+                  clinic, a workforce, a portfolio, or a population.
+                </p>
               </div>
             </div>
             <div className="col-lg-6">
@@ -165,33 +175,169 @@ clinic, a workforce, a portfolio, or a population.</p>
         </div>
       </section>
 
-      <section className="funfacts" ref={ref}>
-        <div className="overlay">
-          <div className="container">
-            <div className="row">
-              {facts.map((item, index) => (
-                <div className="col-md-4 text-center" key={index}>
-                  <div className="fact-box">
-                    <h2>
-                      {inView ? (
-                        <CountUp
-                          end={item.number}
-                          duration={2.5}
-                          separator=","
-                        />
-                      ) : (
-                        0
-                      )}
-                    </h2>
-                    <h4>{item.title}</h4>
+<section className="philosophy-section">
+      <div className="philosophy-container">
+
+        {/* Two-column grid */}
+        <div className="philosophy-grid">
+          {/* Left Column */}
+          <div className="philosophy-left">
+          <h2 style={{
+    fontSize: "35px",
+    color: "#fff",
+    fontWeight: "500",
+  }}>Philosophy</h2>
+            <p className="philosophy-text">
+              Predyx was created to support clinical thinking — not automate it, not replace it. The platform organises complexity before the physician begins reasoning. It highlights what deserves attention. It suggests possibilities without making decisions.
+            </p>
+            <p className="philosophy-text">
+              The physician remains exactly where they belong at the center.
+            </p>
+          </div>
+
+          {/* Right Column - Explainability */}
+          <div className="philosophy-right">
+            <div className="explainability-label">
+              Every recommendation survives one question.
+            </div>
+            
+            <div className="explainability-statement">
+              <span className="doctor-question">Doctor… why?</span>
+              
+              <ul className="explainability-list">
+                <li>
+                  <span className="bullet-point">•</span>
+                  Waist-to-height ratio has progressively increased
+                </li>
+                <li>
+                  <span className="bullet-point">•</span>
+                  Triglycerides elevated, HDL declining across visits
+                </li>
+                <li>
+                  <span className="bullet-point">•</span>
+                  Sleep quality has deteriorated over three assessments
+                </li>
+                <li>
+                  <span className="bullet-point">•</span>
+                  Blood pressure trajectory is worsening
+                </li>
+                <li>
+                  <span className="bullet-point">•</span>
+                  Family history increases lifetime cardiometabolic risk
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+
+     
+    </section>
+      {/* ENGINE SECTION - Integrated */}
+      <section className="engine-section">
+        <div className="container">
+          <div className="engine-content">
+            {/* Eyebrow */}
+            <p className="engine-eyebrow" style={{ textAlign: "center" }}>The Engine</p>
+
+            {/* Headline */}
+            <h2 className="engine-headline" style={{ textAlign: "center" }}>
+              Healthcare doesn't need more data. It needs <span className="engine-highlight-italic">better understanding.</span>
+            </h2>
+
+            {/* Body */}
+            <p style={{ textAlign: "center" }}>
+              Predyx is not another health application. It is not another electronic medical record. It is a Clinical Intelligence Engine — an intelligence layer that transforms fragmented observations into meaningful understanding. Not another application. Not another record. A new layer in healthcare.
+            </p>
+
+            {/* Layers */}
+            <div className="engine-layers">
+              {/* Layer I */}
+              <div className="engine-layer-row">
+                <div className="engine-layer-inner">
+                  <div className="engine-numeral">I</div>
+                  <div className="engine-accent-line" />
+                  <div className="engine-layer-content">
+                    <div className="engine-layer-title">Clinical Logic</div>
+                    <div className="engine-layer-body">
+                      Every observation interpreted through structured medical knowledge — published guidelines, validated thresholds, transparent reasoning. Not statistical guesswork.
+                    </div>
                   </div>
                 </div>
-              ))}
+              </div>
+
+              {/* Layer II — highlighted */}
+              <div className="engine-layer-row highlighted">
+                <div className="engine-layer-inner">
+                  <div className="engine-numeral ">II</div>
+                  <div className="engine-accent-line" />
+                  <div className="engine-layer-content">
+                    <div className="engine-layer-title gold">Derived Intelligence</div>
+                    <div className="engine-layer-body">
+                      The most clinically valuable observations are never directly measured. They are inferred from the relationships between variables.
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              {/* Layer III — highlighted */}
+              <div className="engine-layer-row highlighted">
+                <div className="engine-layer-inner">
+                  <div className="engine-numeral gold">III</div>
+                  <div className="engine-accent-line" />
+                  <div className="engine-layer-content">
+                    <div className="engine-layer-title gold">Risk Stratification</div>
+                    <div className="engine-layer-body">
+                      Risk evaluated across multiple domains — cardiometabolic, renal, hepatic, lifestyle, frailty — rather than collapsed into a single number that conceals more than it reveals.
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              {/* Layer IV */}
+              <div className="engine-layer-row">
+                <div className="engine-layer-inner">
+                  <div className="engine-numeral">IV</div>
+                  <div className="engine-accent-line" />
+                  <div className="engine-layer-content">
+                    <div className="engine-layer-title">Clinical Recommendations</div>
+                    <div className="engine-layer-body">
+                      Knowledge becomes useful only when it changes decisions. Every recommendation: transparent, explainable, evidence-based, traceable to its clinical origin.
+                    </div>
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
         </div>
       </section>
-  <section className="why-choose-wrap-layout1">
+
+
+      
+
+      <section className="funfacts" ref={ref}>
+        <div className="overlay">
+          <div className="container" style={{
+    textAlign: "center",
+   
+  }}>
+            
+              <h2 style={{
+    fontSize: "35px",
+    color: "#fff",
+    fontWeight: "600",
+  }}>We cannot change yesterday's biology.<br/>We can still change tomorrow's.</h2>
+              <p style={{
+    fontSize: "16px",
+    color: "#fff",
+   
+  }}>Ready to discover how clinical intelligence changes preventive healthcare?</p>
+          
+          </div>
+        </div>
+      </section>
+
+      <section className="why-choose-wrap-layout1">
         <div className="container">
           <div className="row">
             <div className="why-choose-box-layout1 col-lg-6">
@@ -357,23 +503,21 @@ clinic, a workforce, a portfolio, or a population.</p>
             </div>
             <div className="why-choose-box-layout2 col-lg-6">
               <img
-                    src={about2}
-                    alt="About us"
-                    className="img-fluid"
-                  />
+                src={about2}
+                alt="About us"
+                className="img-fluid"
+              />
             </div>
           </div>
         </div>
       </section>
 
-
-      
-      <section className="testimonial-section"style={{
-          backgroundImage: `url(${testimonialsBgImage})`,
-          backgroundSize: "cover",
-          backgroundPosition: "center",
-          backgroundRepeat: "no-repeat",
-        }}>
+      <section className="testimonial-section" style={{
+        backgroundImage: `url(${testimonialsBgImage})`,
+        backgroundSize: "cover",
+        backgroundPosition: "center",
+        backgroundRepeat: "no-repeat",
+      }}>
         <div className="container">
           <div className="owl-carousel testimonial-slider">
             <div className="testimonial-item">
@@ -435,10 +579,8 @@ clinic, a workforce, a portfolio, or a population.</p>
           </div>
         </div>
       </section>
-
-    
     </div>
   );
 };
 
-export default AboutPage;
+export default MainPage;
