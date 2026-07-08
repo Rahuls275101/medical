@@ -5,11 +5,9 @@ import axios from 'axios';
 import jsPDF from 'jspdf';
 import html2canvas from 'html2canvas';
 
-
 const HomePage = () => {
     // Form state - ALL fields from document
     const [formData, setFormData] = useState({
-        // Required fields (document Section 3)
         patient_name: '',
         age: '',
         sex: '',
@@ -18,23 +16,19 @@ const HomePage = () => {
         waist_cm: '',
         hip_cm: '',
         sbp_mmHg: '',
-        
-        // Optional fields (document Section 3)
         mobile_number: '',
         email: '',
         address: '',
         city: '',
         state: '',
         pin_code: '',
-        
-        // Boolean fields (document Section 3)
         diabetes: false,
         hypertension: false,
         tobacco_use: false,
         prior_cad: false
     });
 
-    // UI states
+    const [fieldErrors, setFieldErrors] = useState({});
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(null);
     const [warnings, setWarnings] = useState([]);
@@ -44,78 +38,256 @@ const HomePage = () => {
     const [currentStep, setCurrentStep] = useState(1);
     const [pdfLoading, setPdfLoading] = useState(false);
     const [printLoading, setPrintLoading] = useState(false);
-    const totalSteps = 4;
     
-    // Reference for PDF generation
     const reportRef = useRef(null);
 
+    // Validation function
+    const validateField = (name, value) => {
+        let error = '';
+
+        switch(name) {
+            case 'patient_name':
+                if (!value || value.trim().length < 2) {
+                    error = 'Name must be at least 2 characters';
+                } else if (!/^[a-zA-Z\s\-'.]+$/.test(value)) {
+                    error = 'Name can only contain letters, spaces, hyphens, and apostrophes';
+                }
+                break;
+
+            case 'age':
+                if (!value) {
+                    error = 'Age is required';
+                } else {
+                    const numValue = Number(value);
+                    if (isNaN(numValue) || numValue < 18 || numValue > 100) {
+                        error = 'Age must be between 18 and 100';
+                    }
+                }
+                break;
+
+            case 'sex':
+                if (!value) {
+                    error = 'Please select sex';
+                }
+                break;
+
+            case 'mobile_number':
+                if (value && !/^[0-9]{10}$/.test(value)) {
+                    error = 'Mobile number must be 10 digits';
+                }
+                break;
+
+            case 'email':
+                if (value && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value)) {
+                    error = 'Please enter a valid email address';
+                }
+                break;
+
+            case 'pin_code':
+                if (value && !/^[0-9]{6}$/.test(value)) {
+                    error = 'Pincode must be 6 digits';
+                }
+                break;
+
+            case 'height_cm':
+                if (!value) {
+                    error = 'Height is required';
+                } else {
+                    const numValue = Number(value);
+                    if (isNaN(numValue) || numValue < 120 || numValue > 230) {
+                        error = 'Height must be between 120 and 230 cm';
+                    }
+                }
+                break;
+
+            case 'weight_kg':
+                if (!value) {
+                    error = 'Weight is required';
+                } else {
+                    const numValue = Number(value);
+                    if (isNaN(numValue) || numValue < 25 || numValue > 250) {
+                        error = 'Weight must be between 25 and 250 kg';
+                    }
+                }
+                break;
+
+            case 'waist_cm':
+                if (!value) {
+                    error = 'Waist is required';
+                } else {
+                    const numValue = Number(value);
+                    if (isNaN(numValue) || numValue < 40 || numValue > 200) {
+                        error = 'Waist must be between 40 and 200 cm';
+                    }
+                }
+                break;
+
+            case 'hip_cm':
+                if (!value) {
+                    error = 'Hip is required';
+                } else {
+                    const numValue = Number(value);
+                    if (isNaN(numValue) || numValue < 40 || numValue > 220) {
+                        error = 'Hip must be between 40 and 220 cm';
+                    }
+                }
+                break;
+
+            case 'sbp_mmHg':
+                if (!value) {
+                    error = 'SBP is required';
+                } else {
+                    const numValue = Number(value);
+                    if (isNaN(numValue) || numValue < 70 || numValue > 260) {
+                        error = 'SBP must be between 70 and 260 mmHg';
+                    }
+                }
+                break;
+
+            default:
+                break;
+        }
+
+        return error;
+    };
+
+    // Handle input change
     const handleInputChange = (e) => {
         const { name, value, type, checked } = e.target;
         const newValue = type === 'checkbox' ? checked : value;
-        
+
         setFormData(prev => ({
             ...prev,
             [name]: newValue
         }));
+
+        // Validate the field
+        const error = validateField(name, newValue);
+        setFieldErrors(prev => ({
+            ...prev,
+            [name]: error
+        }));
+
         setError(null);
     };
 
+    // Handle number input
+    const handleNumberInput = (e) => {
+        const { name, value } = e.target;
+        
+        // Only allow digits and decimal point
+        const cleanedValue = value.replace(/[^0-9.]/g, '');
+        
+        // Prevent multiple decimal points
+        const parts = cleanedValue.split('.');
+        if (parts.length > 2) return;
+        
+        // Prevent decimal point at start
+        if (cleanedValue === '.') return;
+
+        setFormData(prev => ({
+            ...prev,
+            [name]: cleanedValue
+        }));
+
+        const error = validateField(name, cleanedValue);
+        setFieldErrors(prev => ({
+            ...prev,
+            [name]: error
+        }));
+
+        setError(null);
+    };
+
+    // Validate entire step
     const validateStep = (step) => {
+        let stepErrors = {};
+        let isValid = true;
+
         if (step === 1) {
-            if (!formData.patient_name || !formData.age || !formData.sex) {
-                setError('Please fill all patient information fields');
-                return false;
+            // Patient name validation
+            const nameError = validateField('patient_name', formData.patient_name);
+            if (nameError) {
+                stepErrors.patient_name = nameError;
+                isValid = false;
             }
-            if (formData.age < 18 || formData.age > 100) {
-                setError('Age must be between 18 and 100');
-                return false;
+
+            // Age validation
+            const ageError = validateField('age', formData.age);
+            if (ageError) {
+                stepErrors.age = ageError;
+                isValid = false;
             }
+
+            // Sex validation
+            const sexError = validateField('sex', formData.sex);
+            if (sexError) {
+                stepErrors.sex = sexError;
+                isValid = false;
+            }
+
+            // Mobile validation (if provided)
+            if (formData.mobile_number) {
+                const mobileError = validateField('mobile_number', formData.mobile_number);
+                if (mobileError) {
+                    stepErrors.mobile_number = mobileError;
+                    isValid = false;
+                }
+            }
+
+            // Email validation (if provided)
+            if (formData.email) {
+                const emailError = validateField('email', formData.email);
+                if (emailError) {
+                    stepErrors.email = emailError;
+                    isValid = false;
+                }
+            }
+
         } else if (step === 2) {
-            return true;
+            // Pincode validation (if provided)
+            if (formData.pin_code) {
+                const pinError = validateField('pin_code', formData.pin_code);
+                if (pinError) {
+                    stepErrors.pin_code = pinError;
+                    isValid = false;
+                }
+            }
+
         } else if (step === 3) {
-            if (!formData.height_cm || !formData.weight_kg || 
-                !formData.waist_cm || !formData.hip_cm) {
-                setError('Please fill all anthropometry fields');
-                return false;
-            }
-            if (formData.height_cm < 120 || formData.height_cm > 230) {
-                setError('Height must be between 120 and 230 cm');
-                return false;
-            }
-            if (formData.weight_kg < 25 || formData.weight_kg > 250) {
-                setError('Weight must be between 25 and 250 kg');
-                return false;
-            }
-            if (formData.waist_cm < 40 || formData.waist_cm > 200) {
-                setError('Waist must be between 40 and 200 cm');
-                return false;
-            }
-            if (formData.hip_cm < 40 || formData.hip_cm > 220) {
-                setError('Hip must be between 40 and 220 cm');
-                return false;
-            }
+            // Anthropometry validations
+            const fields = ['height_cm', 'weight_kg', 'waist_cm', 'hip_cm'];
+            fields.forEach(field => {
+                const error = validateField(field, formData[field]);
+                if (error) {
+                    stepErrors[field] = error;
+                    isValid = false;
+                }
+            });
+
         } else if (step === 4) {
-            if (!formData.sbp_mmHg) {
-                setError('Please enter systolic blood pressure');
-                return false;
-            }
-            if (formData.sbp_mmHg < 70 || formData.sbp_mmHg > 260) {
-                setError('SBP must be between 70 and 260 mmHg');
-                return false;
+            // SBP validation
+            const sbpError = validateField('sbp_mmHg', formData.sbp_mmHg);
+            if (sbpError) {
+                stepErrors.sbp_mmHg = sbpError;
+                isValid = false;
             }
         }
-        return true;
+
+        setFieldErrors(stepErrors);
+        return isValid;
     };
 
     const nextStep = () => {
         if (validateStep(currentStep)) {
-            setError(null);
+            setFieldErrors({});
             setCurrentStep(currentStep + 1);
         }
     };
 
     const prevStep = () => {
         setCurrentStep(currentStep - 1);
+        setFieldErrors({});
         setError(null);
     };
 
@@ -146,11 +318,7 @@ const HomePage = () => {
                 sbp_mmHg: parseInt(formData.sbp_mmHg)
             };
 
-            console.log('Submitting payload:', payload);
-
             const response = await axios.post(`${apiBaseUrl}/assessments`, payload);
-
-            console.log('API Response:', response.data);
 
             if (response.data.success) {
                 const responseData = response.data.data || response.data;
@@ -226,11 +394,7 @@ const HomePage = () => {
                 scale: 2,
                 useCORS: true,
                 logging: false,
-                backgroundColor: '#ffffff',
-                width: reportElement.scrollWidth,
-                height: reportElement.scrollHeight,
-                windowWidth: reportElement.scrollWidth,
-                windowHeight: reportElement.scrollHeight
+                backgroundColor: '#ffffff'
             });
 
             const imgData = canvas.toDataURL('image/png');
@@ -266,7 +430,7 @@ const HomePage = () => {
         }
     };
 
-    // PRINT FUNCTION with better design
+    // Print Function
     const handlePrint = () => {
         if (!result) return;
         
@@ -280,7 +444,6 @@ const HomePage = () => {
                 return;
             }
 
-            // Create print window
             const printWindow = window.open('', '_blank', 'width=900,height=700');
             
             if (!printWindow) {
@@ -289,470 +452,38 @@ const HomePage = () => {
                 return;
             }
 
-            // Write content to print window with enhanced design
             printWindow.document.write(`
                 <!DOCTYPE html>
                 <html>
                     <head>
                         <title>Predyx Assessment Report</title>
                         <style>
-                            /* Reset and Base */
-                            * {
-                                margin: 0;
-                                padding: 0;
-                                box-sizing: border-box;
-                            }
-                            
-                            body {
-                                font-family: 'Segoe UI', Arial, sans-serif;
-                                padding: 40px;
-                                background: #f5f7fa;
-                                color: #2c3e50;
-                            }
-                            
-                            /* Main Container */
-                            .print-container {
-                                max-width: 1100px;
-                                margin: 0 auto;
-                                background: white;
-                                padding: 50px;
-                                border-radius: 12px;
-                                box-shadow: 0 10px 40px rgba(0,0,0,0.1);
-                            }
-                            
-                            /* Header */
-                            .report-header {
-                                text-align: center;
-                                margin-bottom: 35px;
-                                padding-bottom: 25px;
-                                border-bottom: 3px solid #4CAF50;
-                                position: relative;
-                            }
-                            
-                            .report-header::after {
-                                content: '';
-                                position: absolute;
-                                bottom: -3px;
-                                left: 25%;
-                                width: 50%;
-                                height: 3px;
-                                background: #2e7d32;
-                            }
-                            
-                            .report-header h1 {
-                                color: #1a237e;
-                                font-size: 32px;
-                                font-weight: 700;
-                                margin-bottom: 12px;
-                                letter-spacing: 1px;
-                            }
-                            
-                            .report-header .subtitle {
-                                color: #4CAF50;
-                                font-size: 14px;
-                                font-weight: 600;
-                                text-transform: uppercase;
-                                letter-spacing: 2px;
-                                margin-bottom: 15px;
-                            }
-                            
-                            .report-meta {
-                                display: flex;
-                                justify-content: center;
-                                gap: 30px;
-                                font-size: 13px;
-                                color: #666;
-                                flex-wrap: wrap;
-                            }
-                            
-                            .report-meta span {
-                                background: #f0f2f5;
-                                padding: 6px 18px;
-                                border-radius: 20px;
-                                border: 1px solid #e0e0e0;
-                            }
-                            
-                            /* Score Card */
-                            .score-card {
-                                display: flex;
-                                align-items: center;
-                                justify-content: center;
-                                gap: 60px;
-                                background: linear-gradient(135deg, #1a237e 0%, #283593 50%, #4CAF50 100%);
-                                padding: 35px 50px;
-                                border-radius: 16px;
-                                margin-bottom: 35px;
-                                color: white;
-                                box-shadow: 0 8px 25px rgba(26, 35, 126, 0.3);
-                            }
-                            
-                            .score-big {
-                                text-align: center;
-                            }
-                            
-                            .score-number {
-                                font-size: 56px;
-                                font-weight: 800;
-                                line-height: 1;
-                                text-shadow: 0 2px 10px rgba(0,0,0,0.2);
-                            }
-                            
-                            .score-label {
-                                font-size: 16px;
-                                opacity: 0.9;
-                                margin-top: 5px;
-                                font-weight: 500;
-                            }
-                            
-                            .score-divider {
-                                width: 2px;
-                                height: 60px;
-                                background: rgba(255,255,255,0.3);
-                            }
-                            
-                            .score-details {
-                                display: flex;
-                                flex-direction: column;
-                                gap: 12px;
-                            }
-                            
-                            .band {
-                                padding: 10px 35px;
-                                border-radius: 30px;
-                                font-weight: 700;
-                                font-size: 18px;
-                                text-align: center;
-                                text-transform: uppercase;
-                                letter-spacing: 1px;
-                                background: rgba(255,255,255,0.25);
-                                border: 2px solid rgba(255,255,255,0.5);
-                            }
-                            
-                            .priority {
-                                padding: 8px 30px;
-                                border-radius: 30px;
-                                font-weight: 600;
-                                font-size: 16px;
-                                text-align: center;
-                                background: rgba(255,255,255,0.15);
-                                border: 1px solid rgba(255,255,255,0.3);
-                            }
-                            
-                            /* Warning Banner */
-                            .warning-banner {
-                                background: #fff3e0;
-                                border-left: 5px solid #ff9800;
-                                padding: 18px 25px;
-                                border-radius: 8px;
-                                margin-bottom: 30px;
-                                color: #e65100;
-                            }
-                            
-                            .warning-banner h4 {
-                                font-size: 16px;
-                                margin-bottom: 8px;
-                            }
-                            
-                            .warning-banner p {
-                                font-size: 14px;
-                                margin: 3px 0;
-                            }
-                            
-                            /* Result Grid */
-                            .result-grid {
-                                display: grid;
-                                grid-template-columns: 1fr 1fr;
-                                gap: 25px;
-                                margin-bottom: 30px;
-                            }
-                            
-                            .result-section {
-                                background: #f8faff;
-                                padding: 22px 25px;
-                                border-radius: 12px;
-                                border: 1px solid #e8ecf1;
-                                transition: all 0.3s;
-                            }
-                            
-                            .result-section:hover {
-                                border-color: #4CAF50;
-                            }
-                            
-                            .result-section h3 {
-                                color: #1a237e;
-                                margin-bottom: 15px;
-                                font-size: 17px;
-                                font-weight: 700;
-                                border-bottom: 2px solid #4CAF50;
-                                padding-bottom: 10px;
-                                display: flex;
-                                align-items: center;
-                                gap: 8px;
-                            }
-                            
-                            .result-section.full-width {
-                                grid-column: 1 / -1;
-                            }
-                            
-                            /* Info Grid */
-                            .info-grid {
-                                display: grid;
-                                grid-template-columns: 1fr 1fr;
-                                gap: 8px 20px;
-                            }
-                            
-                            .info-grid div {
-                                padding: 6px 0;
-                                font-size: 14px;
-                                border-bottom: 1px dashed #f0f0f0;
-                            }
-                            
-                            .info-grid div:last-child {
-                                border-bottom: none;
-                            }
-                            
-                            .info-grid strong {
-                                color: #37474f;
-                                font-weight: 600;
-                            }
-                            
-                            /* Measurements Grid */
-                            .measurements-grid {
-                                display: grid;
-                                grid-template-columns: 1fr 1fr 1fr;
-                                gap: 8px 15px;
-                            }
-                            
-                            .measurements-grid div {
-                                padding: 6px 0;
-                                font-size: 13px;
-                                border-bottom: 1px dashed #f0f0f0;
-                            }
-                            
-                            .measurements-grid strong {
-                                color: #37474f;
-                                font-weight: 600;
-                            }
-                            
-                            /* Domain Grid */
-                            .domain-grid {
-                                display: grid;
-                                grid-template-columns: 1fr 1fr;
-                                gap: 10px;
-                            }
-                            
-                            .domain-item {
-                                display: flex;
-                                justify-content: space-between;
-                                padding: 10px 15px;
-                                background: white;
-                                border-radius: 8px;
-                                border: 1px solid #e8ecf1;
-                                font-size: 14px;
-                            }
-                            
-                            .domain-value {
-                                font-weight: 700;
-                                color: #4CAF50;
-                            }
-                            
-                            /* Drivers List */
-                            .drivers-list {
-                                display: flex;
-                                flex-direction: column;
-                                gap: 8px;
-                            }
-                            
-                            .driver-item {
-                                display: flex;
-                                justify-content: space-between;
-                                padding: 10px 15px;
-                                background: white;
-                                border-radius: 8px;
-                                border: 1px solid #e8ecf1;
-                                font-size: 14px;
-                            }
-                            
-                            .driver-name {
-                                font-weight: 500;
-                            }
-                            
-                            .driver-points {
-                                font-weight: 700;
-                                color: #d32f2f;
-                            }
-                            
-                            /* Interpretation */
-                            .interpretation-text {
-                                line-height: 1.8;
-                                font-size: 14.5px;
-                                padding: 15px 20px;
-                                background: white;
-                                border-radius: 8px;
-                                border: 1px solid #e8ecf1;
-                                color: #37474f;
-                            }
-                            
-                            /* Recommendations */
-                            .recommendations-list {
-                                list-style: none;
-                                padding: 0;
-                            }
-                            
-                            .recommendations-list li {
-                                padding: 12px 18px 12px 45px;
-                                background: white;
-                                margin-bottom: 8px;
-                                border-radius: 8px;
-                                border: 1px solid #e8ecf1;
-                                position: relative;
-                                font-size: 14px;
-                            }
-                            
-                            .recommendations-list li:before {
-                                content: "💡";
-                                position: absolute;
-                                left: 15px;
-                                font-size: 18px;
-                            }
-                            
-                            /* Footer */
-                            .report-footer {
-                                margin-top: 35px;
-                                padding-top: 25px;
-                                border-top: 2px solid #e8ecf1;
-                                text-align: center;
-                            }
-                            
-                            .report-footer .disclaimer {
-                                font-size: 13px;
-                                color: #666;
-                                margin-bottom: 8px;
-                                background: #f8f9fa;
-                                padding: 10px;
-                                border-radius: 8px;
-                            }
-                            
-                            .report-footer .engine-info {
-                                font-size: 12px;
-                                color: #999;
-                            }
-                            
-                            /* Badge */
-                            .badge {
-                                display: inline-block;
-                                padding: 3px 12px;
-                                border-radius: 12px;
-                                font-size: 12px;
-                                font-weight: 600;
-                                background: #e8f5e9;
-                                color: #2e7d32;
-                            }
-                            
-                            /* Watermark */
-                            .watermark {
-                                position: fixed;
-                                bottom: 20px;
-                                right: 20px;
-                                opacity: 0.05;
-                                font-size: 60px;
-                                font-weight: 900;
-                                color: #1a237e;
-                                pointer-events: none;
-                                z-index: -1;
-                            }
-                            
-                            /* Print Styles */
-                            @media print {
-                                body {
-                                    background: white;
-                                    padding: 15px;
-                                }
-                                
-                                .print-container {
-                                    box-shadow: none;
-                                    padding: 30px;
-                                    border-radius: 0;
-                                }
-                                
-                                .result-section {
-                                    break-inside: avoid;
-                                    page-break-inside: avoid;
-                                }
-                                
-                                .score-card {
-                                    break-inside: avoid;
-                                    page-break-inside: avoid;
-                                }
-                                
-                                .result-grid {
-                                    break-inside: avoid;
-                                }
-                            }
-                            
-                            /* Responsive */
-                            @media (max-width: 768px) {
-                                .result-grid {
-                                    grid-template-columns: 1fr;
-                                }
-                                
-                                .measurements-grid {
-                                    grid-template-columns: 1fr 1fr;
-                                }
-                                
-                                .info-grid {
-                                    grid-template-columns: 1fr;
-                                }
-                                
-                                .score-card {
-                                    flex-direction: column;
-                                    gap: 25px;
-                                    padding: 25px;
-                                }
-                                
-                                .score-divider {
-                                    display: none;
-                                }
-                                
-                                .report-meta {
-                                    flex-direction: column;
-                                    gap: 10px;
-                                    align-items: center;
-                                }
-                                
-                                .domain-grid {
-                                    grid-template-columns: 1fr;
-                                }
-                                
-                                body {
-                                    padding: 15px;
-                                }
-                                
-                                .print-container {
-                                    padding: 20px;
-                                }
-                            }
-                            
-                            /* Print specific adjustments */
-                            @media print {
-                                .print-container {
-                                    box-shadow: none !important;
-                                }
-                            }
+                            body { font-family: Arial, sans-serif; padding: 40px; }
+                            .print-container { max-width: 1100px; margin: 0 auto; }
+                            .score-card { background: #1a237e; color: white; padding: 30px; border-radius: 8px; }
+                            .result-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+                            .result-section { border: 1px solid #ddd; padding: 20px; border-radius: 8px; }
+                            .full-width { grid-column: 1 / -1; }
+                            .info-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+                            .measurements-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 10px; }
+                            .domain-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+                            .domain-item { display: flex; justify-content: space-between; padding: 8px; background: #f5f5f5; }
+                            .driver-item { display: flex; justify-content: space-between; padding: 8px; border-bottom: 1px solid #eee; }
+                            .recommendations-list { list-style: none; padding: 0; }
+                            .recommendations-list li { padding: 8px; border-bottom: 1px solid #eee; }
+                            .report-footer { margin-top: 30px; padding-top: 20px; border-top: 2px solid #ddd; }
+                            @media print { body { padding: 20px; } }
                         </style>
                     </head>
                     <body>
                         <div class="print-container">
                             ${printContent.innerHTML}
-                            <div class="watermark">PREDYX</div>
                         </div>
                         <script>
                             window.onload = function() {
                                 setTimeout(function() {
                                     window.print();
-                                    setTimeout(function() {
-                                        window.close();
-                                    }, 1000);
+                                    setTimeout(function() { window.close(); }, 1000);
                                 }, 500);
                             };
                         <\/script>
@@ -770,6 +501,7 @@ const HomePage = () => {
         }
     };
 
+    // RESET FORM FUNCTION - FIXED
     const resetForm = () => {
         setFormData({
             patient_name: '',
@@ -791,11 +523,15 @@ const HomePage = () => {
             tobacco_use: false,
             prior_cad: false
         });
+        setFieldErrors({});
         setResult(null);
         setShowResult(false);
         setError(null);
         setWarnings([]);
         setCurrentStep(1);
+        setLoading(false);
+        setPdfLoading(false);
+        setPrintLoading(false);
     };
 
     const getPriorityColor = (priority) => {
@@ -835,7 +571,6 @@ const HomePage = () => {
                     <button className="btn-close" onClick={resetForm}>×</button>
                 </div>
 
-                {/* Report Content - PDF generation */}
                 <div ref={reportRef} className="report-content" id="report-content">
                     {warnings.length > 0 && (
                         <div className="warning-banner">
@@ -853,7 +588,6 @@ const HomePage = () => {
                         </div>
                     </div>
 
-                    {/* Score Card */}
                     <div className="score-card">
                         <div className="score-big">
                             <div className="score-number">{result.predyx_pbs || 0}</div>
@@ -861,10 +595,7 @@ const HomePage = () => {
                         </div>
                         <div className="score-divider"></div>
                         <div className="score-details">
-                            <div className="band" style={{ 
-                                background: getBandColor(result.risk_band),
-                                color: 'white',
-                            }}>
+                            <div className="band" style={{ background: getBandColor(result.risk_band), color: 'white' }}>
                                 {result.risk_band || 'Unknown'}
                             </div>
                             <div className={`priority priority-${getPriorityColor(result.priority)}`}>
@@ -874,7 +605,6 @@ const HomePage = () => {
                     </div>
 
                     <div className="result-grid">
-                        {/* Patient Information */}
                         <div className="result-section">
                             <h3>👤 Patient Information</h3>
                             <div className="info-grid">
@@ -886,7 +616,6 @@ const HomePage = () => {
                             </div>
                         </div>
 
-                        {/* Address */}
                         {(patient.address || patient.city || patient.state || patient.pin_code) && (
                             <div className="result-section">
                                 <h3>📍 Address</h3>
@@ -899,7 +628,6 @@ const HomePage = () => {
                             </div>
                         )}
 
-                        {/* Measurements */}
                         <div className="result-section">
                             <h3>📏 Measurements</h3>
                             <div className="measurements-grid">
@@ -915,7 +643,6 @@ const HomePage = () => {
                             </div>
                         </div>
 
-                        {/* Domain Scores */}
                         <div className="result-section">
                             <h3>📈 Domain Scores</h3>
                             <div className="domain-grid">
@@ -942,7 +669,6 @@ const HomePage = () => {
                             </div>
                         </div>
 
-                        {/* Top Risk Drivers */}
                         <div className="result-section">
                             <h3>🎯 Top Risk Drivers</h3>
                             <div className="drivers-list">
@@ -960,13 +686,11 @@ const HomePage = () => {
                         </div>
                     </div>
 
-                    {/* Clinical Interpretation */}
                     <div className="result-section full-width">
                         <h3>💬 Clinical Interpretation</h3>
                         <p className="interpretation-text">{result.interpretation || 'No interpretation available'}</p>
                     </div>
 
-                    {/* Recommendations */}
                     <div className="result-section full-width">
                         <h3>💡 Recommendations</h3>
                         <ul className="recommendations-list">
@@ -980,7 +704,6 @@ const HomePage = () => {
                         </ul>
                     </div>
 
-                    {/* Footer with disclaimer */}
                     <div className="report-footer">
                         <p className="disclaimer">⚠️ This is a screening report, not a diagnosis. Please consult your doctor for medical advice.</p>
                         <p className="engine-info">Engine: Predyx Quick v1.0 | Assessment ID: {result.assessment_code || result.assessment_id || 'N/A'}</p>
@@ -988,18 +711,10 @@ const HomePage = () => {
                 </div>
 
                 <div className="result-actions">
-                    <button 
-                        onClick={generatePDF} 
-                        className="btn-pdf"
-                        disabled={pdfLoading}
-                    >
+                    <button onClick={generatePDF} className="btn-pdf" disabled={pdfLoading}>
                         {pdfLoading ? '⏳ Generating PDF...' : '📥 Download PDF Report'}
                     </button>
-                    <button 
-                        onClick={handlePrint} 
-                        className="btn-print"
-                        disabled={printLoading}
-                    >
+                    <button onClick={handlePrint} className="btn-print" disabled={printLoading}>
                         {printLoading ? '⏳ Loading...' : '🖨️ Print Report'}
                     </button>
                     <button onClick={resetForm} className="btn-new">
@@ -1050,7 +765,11 @@ const HomePage = () => {
                                         onChange={handleInputChange}
                                         placeholder="Enter patient's full name"
                                     />
+                                    {fieldErrors.patient_name && (
+                                        <span className="field-error">{fieldErrors.patient_name}</span>
+                                    )}
                                 </div>
+
                                 <div className="form-group">
                                     <label>Mobile Number</label>
                                     <input
@@ -1058,9 +777,14 @@ const HomePage = () => {
                                         name="mobile_number"
                                         value={formData.mobile_number}
                                         onChange={handleInputChange}
-                                        placeholder="Enter mobile number"
+                                        placeholder="Enter 10-digit mobile number"
+                                        maxLength="10"
                                     />
+                                    {fieldErrors.mobile_number && (
+                                        <span className="field-error">{fieldErrors.mobile_number}</span>
+                                    )}
                                 </div>
+
                                 <div className="form-group">
                                     <label>Email</label>
                                     <input
@@ -1070,19 +794,27 @@ const HomePage = () => {
                                         onChange={handleInputChange}
                                         placeholder="Enter email address"
                                     />
+                                    {fieldErrors.email && (
+                                        <span className="field-error">{fieldErrors.email}</span>
+                                    )}
                                 </div>
+
                                 <div className="form-group">
                                     <label>Age (years) *</label>
                                     <input
                                         type="number"
                                         name="age"
                                         value={formData.age}
-                                        onChange={handleInputChange}
+                                        onChange={handleNumberInput}
                                         placeholder="18-100"
                                         min="18"
                                         max="100"
                                     />
+                                    {fieldErrors.age && (
+                                        <span className="field-error">{fieldErrors.age}</span>
+                                    )}
                                 </div>
+
                                 <div className="form-group">
                                     <label>Sex *</label>
                                     <select
@@ -1095,6 +827,9 @@ const HomePage = () => {
                                         <option value="female">Female</option>
                                         <option value="other">Other</option>
                                     </select>
+                                    {fieldErrors.sex && (
+                                        <span className="field-error">{fieldErrors.sex}</span>
+                                    )}
                                 </div>
                             </div>
                         </div>
@@ -1117,6 +852,7 @@ const HomePage = () => {
                                         placeholder="Enter address"
                                     />
                                 </div>
+
                                 <div className="form-group">
                                     <label>City</label>
                                     <input
@@ -1127,6 +863,7 @@ const HomePage = () => {
                                         placeholder="Enter city"
                                     />
                                 </div>
+
                                 <div className="form-group">
                                     <label>State</label>
                                     <input
@@ -1137,6 +874,7 @@ const HomePage = () => {
                                         placeholder="Enter state"
                                     />
                                 </div>
+
                                 <div className="form-group">
                                     <label>Pincode</label>
                                     <input
@@ -1144,8 +882,12 @@ const HomePage = () => {
                                         name="pin_code"
                                         value={formData.pin_code}
                                         onChange={handleInputChange}
-                                        placeholder="Enter pincode"
+                                        placeholder="Enter 6-digit pincode"
+                                        maxLength="6"
                                     />
+                                    {fieldErrors.pin_code && (
+                                        <span className="field-error">{fieldErrors.pin_code}</span>
+                                    )}
                                 </div>
                             </div>
                         </div>
@@ -1164,51 +906,66 @@ const HomePage = () => {
                                         type="number"
                                         name="height_cm"
                                         value={formData.height_cm}
-                                        onChange={handleInputChange}
+                                        onChange={handleNumberInput}
                                         placeholder="120-230"
                                         min="120"
                                         max="230"
                                         step="0.1"
                                     />
+                                    {fieldErrors.height_cm && (
+                                        <span className="field-error">{fieldErrors.height_cm}</span>
+                                    )}
                                 </div>
+
                                 <div className="form-group">
                                     <label>Weight (kg) *</label>
                                     <input
                                         type="number"
                                         name="weight_kg"
                                         value={formData.weight_kg}
-                                        onChange={handleInputChange}
+                                        onChange={handleNumberInput}
                                         placeholder="25-250"
                                         min="25"
                                         max="250"
                                         step="0.1"
                                     />
+                                    {fieldErrors.weight_kg && (
+                                        <span className="field-error">{fieldErrors.weight_kg}</span>
+                                    )}
                                 </div>
+
                                 <div className="form-group">
                                     <label>Waist (cm) *</label>
                                     <input
                                         type="number"
                                         name="waist_cm"
                                         value={formData.waist_cm}
-                                        onChange={handleInputChange}
+                                        onChange={handleNumberInput}
                                         placeholder="40-200"
                                         min="40"
                                         max="200"
                                         step="0.1"
                                     />
+                                    {fieldErrors.waist_cm && (
+                                        <span className="field-error">{fieldErrors.waist_cm}</span>
+                                    )}
                                 </div>
+
                                 <div className="form-group">
                                     <label>Hip (cm) *</label>
                                     <input
                                         type="number"
                                         name="hip_cm"
                                         value={formData.hip_cm}
-                                        onChange={handleInputChange}
+                                        onChange={handleNumberInput}
                                         placeholder="40-220"
                                         min="40"
                                         max="220"
                                         step="0.1"
                                     />
+                                    {fieldErrors.hip_cm && (
+                                        <span className="field-error">{fieldErrors.hip_cm}</span>
+                                    )}
                                 </div>
                             </div>
                         </div>
@@ -1227,11 +984,14 @@ const HomePage = () => {
                                         type="number"
                                         name="sbp_mmHg"
                                         value={formData.sbp_mmHg}
-                                        onChange={handleInputChange}
+                                        onChange={handleNumberInput}
                                         placeholder="70-260"
                                         min="70"
                                         max="260"
                                     />
+                                    {fieldErrors.sbp_mmHg && (
+                                        <span className="field-error">{fieldErrors.sbp_mmHg}</span>
+                                    )}
                                 </div>
                             </div>
                         </div>
