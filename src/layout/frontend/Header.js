@@ -68,16 +68,16 @@ function Header() {
     <div className="container-fluid">
       <div className="row no-gutters d-flex align-items-center">
         <div className="col-lg-3 col-md-3 logo-area-layout1">
-          {" "}
-          <a href="index-2.html" className="temp-logo">
-            
+     
+          <Link to={baseUrl + '/'} className="temp-logo">
+    
             <img
   src={logo}
   alt="AdminLTE Logo"
   className=""
   style={{ opacity: 0.8 }}
 />
-          </a>
+</Link>
         </div>
         <div className="col-lg-6 col-md-6 possition-static">
           <div className="template-main-menu">
