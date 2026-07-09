@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { Helmet } from "react-helmet-async";
 import CountUp from "react-countup";
 import { useInView } from "react-intersection-observer";
@@ -14,11 +14,53 @@ import person2 from "./../../images/testimonial3.jpg";
 import person3 from "./../../images/testimonial3.jpg";
 
 const MainPage = () => {
-  const carouselRef = useRef(null);
+  const doctorCarouselRef = useRef(null);
+  const testimonialCarouselRef = useRef(null);
   const isCarouselInitialized = useRef(false);
+  const isDoctorCarouselInitialized = useRef(false);
+  const [isCarouselReady, setIsCarouselReady] = useState(false);
+
+  // Define doctors data
+  const doctors = [
+    {
+      id: 1,
+      name: "Dr. John Smith",
+      specialization: "Cardiologist",
+      experience: "12+ Years",
+      image: "https://images.unsplash.com/photo-1612349317150-e413f6a5b16d?w=400"
+    },
+    {
+      id: 2,
+      name: "Dr. Sarah Wilson",
+      specialization: "Neurologist",
+      experience: "10+ Years",
+      image: "https://images.unsplash.com/photo-1594824476967-48c8b964273f?w=400"
+    },
+    {
+      id: 3,
+      name: "Dr. Michael Lee",
+      specialization: "Dentist",
+      experience: "8+ Years",
+      image: "https://images.unsplash.com/photo-1622253692010-333f2da6031d?w=400"
+    },
+    {
+      id: 4,
+      name: "Dr. Emma Brown",
+      specialization: "Dermatologist",
+      experience: "15+ Years",
+      image: "https://images.unsplash.com/photo-1559839734-2b71ea197ec2?w=400"
+    },
+    {
+      id: 5,
+      name: "Dr. David Miller",
+      specialization: "Orthopedic",
+      experience: "14+ Years",
+      image: "https://images.unsplash.com/photo-1537368910025-700350fe46c7?w=400"
+    }
+  ];
 
   useEffect(() => {
-    // Dynamically import jQuery and owl.carousel
+    // Load jQuery and owl.carousel
     const loadCarousel = async () => {
       try {
         // Import jQuery first
@@ -36,8 +78,11 @@ const MainPage = () => {
         await import('owl.carousel/dist/assets/owl.carousel.css');
         await import('owl.carousel/dist/assets/owl.theme.default.css');
 
-        // Initialize carousel after a small delay
+        setIsCarouselReady(true);
+
+        // Initialize carousels after a small delay
         setTimeout(() => {
+          // Initialize testimonial carousel
           if (window.$ && window.$.fn && window.$.fn.owlCarousel && !isCarouselInitialized.current) {
             window.$(".testimonial-slider").owlCarousel({
               items: 1,
@@ -51,7 +96,35 @@ const MainPage = () => {
             });
             isCarouselInitialized.current = true;
           }
-        }, 200);
+
+          // Initialize doctor carousel
+          if (window.$ && window.$.fn && window.$.fn.owlCarousel && !isDoctorCarouselInitialized.current) {
+            window.$(".doctor-slider").owlCarousel({
+              loop: true,
+              margin: 25,
+              nav: false,
+              dots: false,
+              autoplay: true,
+              autoplayTimeout: 3000,
+              smartSpeed: 800,
+              responsive: {
+                0: {
+                  items: 1,
+                },
+                576: {
+                  items: 2,
+                },
+                992: {
+                  items: 3,
+                },
+                1200: {
+                  items: 4,
+                },
+              },
+            });
+            isDoctorCarouselInitialized.current = true;
+          }
+        }, 300);
       } catch (error) {
         console.error('Error loading carousel:', error);
       }
@@ -61,10 +134,16 @@ const MainPage = () => {
 
     // Cleanup
     return () => {
-      if (window.$ && window.$.fn && window.$.fn.owlCarousel && isCarouselInitialized.current) {
+      if (window.$ && window.$.fn && window.$.fn.owlCarousel) {
         try {
-          window.$(".testimonial-slider").owlCarousel('destroy');
-          isCarouselInitialized.current = false;
+          if (isCarouselInitialized.current) {
+            window.$(".testimonial-slider").owlCarousel('destroy');
+            isCarouselInitialized.current = false;
+          }
+          if (isDoctorCarouselInitialized.current) {
+            window.$(".doctor-slider").owlCarousel('destroy');
+            isDoctorCarouselInitialized.current = false;
+          }
         } catch (e) {
           console.log('Carousel already destroyed');
         }
@@ -77,20 +156,30 @@ const MainPage = () => {
     threshold: 0.3,
   });
 
-  const facts = [
-    {
-      number: 59,
-      title: "Health Sections",
-    },
-    {
-      number: 4709,
-      title: "Happy Patients",
-    },
-    {
-      number: 128,
-      title: "Quality Doctors",
-    },
-  ];
+  // Render doctor cards
+  const renderDoctorCards = () => {
+    return doctors.map((doctor) => (
+      <div className="item" key={doctor.id}>
+        <div className="doctor-card">
+          <img
+            src={doctor.image}
+            alt={doctor.name}
+            className="doctor-img"
+          />
+          <div className="doctor-body">
+            <h4>{doctor.name}</h4>
+            <span className="speciality">
+              {doctor.specialization}
+            </span>
+            <p>{doctor.experience} Experience</p>
+            <button className="appointment-btn">
+              Book Appointment
+            </button>
+          </div>
+        </div>
+      </div>
+    ));
+  };
 
   return (
     <div>
@@ -175,84 +264,74 @@ const MainPage = () => {
         </div>
       </section>
 
-<section className="philosophy-section">
-      <div className="philosophy-container">
-
-        {/* Two-column grid */}
-        <div className="philosophy-grid">
-          {/* Left Column */}
-          <div className="philosophy-left">
-          <h2 style={{
-    fontSize: "35px",
-    color: "#fff",
-    fontWeight: "500",
-  }}>Philosophy</h2>
-            <p className="philosophy-text">
-              Predyx was created to support clinical thinking — not automate it, not replace it. The platform organises complexity before the physician begins reasoning. It highlights what deserves attention. It suggests possibilities without making decisions.
-            </p>
-            <p className="philosophy-text">
-              The physician remains exactly where they belong at the center.
-            </p>
-          </div>
-
-          {/* Right Column - Explainability */}
-          <div className="philosophy-right">
-            <div className="explainability-label">
-              Every recommendation survives one question.
+      <section className="philosophy-section">
+        <div className="philosophy-container">
+          <div className="philosophy-grid">
+            <div className="philosophy-left">
+              <h2 style={{
+                fontSize: "35px",
+                color: "#fff",
+                fontWeight: "500",
+              }}>Philosophy</h2>
+              <p className="philosophy-text">
+                Predyx was created to support clinical thinking — not automate it, not replace it. The platform organises complexity before the physician begins reasoning. It highlights what deserves attention. It suggests possibilities without making decisions.
+              </p>
+              <p className="philosophy-text">
+                The physician remains exactly where they belong at the center.
+              </p>
             </div>
-            
-            <div className="explainability-statement">
-              <span className="doctor-question">Doctor… why?</span>
+
+            <div className="philosophy-right">
+              <div className="explainability-label">
+                Every recommendation survives one question.
+              </div>
               
-              <ul className="explainability-list">
-                <li>
-                  <span className="bullet-point">•</span>
-                  Waist-to-height ratio has progressively increased
-                </li>
-                <li>
-                  <span className="bullet-point">•</span>
-                  Triglycerides elevated, HDL declining across visits
-                </li>
-                <li>
-                  <span className="bullet-point">•</span>
-                  Sleep quality has deteriorated over three assessments
-                </li>
-                <li>
-                  <span className="bullet-point">•</span>
-                  Blood pressure trajectory is worsening
-                </li>
-                <li>
-                  <span className="bullet-point">•</span>
-                  Family history increases lifetime cardiometabolic risk
-                </li>
-              </ul>
+              <div className="explainability-statement">
+                <span className="doctor-question">Doctor… why?</span>
+                
+                <ul className="explainability-list">
+                  <li>
+                    <span className="bullet-point">•</span>
+                    Waist-to-height ratio has progressively increased
+                  </li>
+                  <li>
+                    <span className="bullet-point">•</span>
+                    Triglycerides elevated, HDL declining across visits
+                  </li>
+                  <li>
+                    <span className="bullet-point">•</span>
+                    Sleep quality has deteriorated over three assessments
+                  </li>
+                  <li>
+                    <span className="bullet-point">•</span>
+                    Blood pressure trajectory is worsening
+                  </li>
+                  <li>
+                    <span className="bullet-point">•</span>
+                    Family history increases lifetime cardiometabolic risk
+                  </li>
+                </ul>
+              </div>
             </div>
           </div>
         </div>
-      </div>
+      </section>
 
-     
-    </section>
       {/* ENGINE SECTION - Integrated */}
       <section className="engine-section">
         <div className="container">
           <div className="engine-content">
-            {/* Eyebrow */}
             <p className="engine-eyebrow" style={{ textAlign: "center" }}>The Engine</p>
 
-            {/* Headline */}
             <h2 className="engine-headline" style={{ textAlign: "center" }}>
               Healthcare doesn't need more data. It needs <span className="engine-highlight-italic">better understanding.</span>
             </h2>
 
-            {/* Body */}
             <p style={{ textAlign: "center" }}>
               Predyx is not another health application. It is not another electronic medical record. It is a Clinical Intelligence Engine — an intelligence layer that transforms fragmented observations into meaningful understanding. Not another application. Not another record. A new layer in healthcare.
             </p>
 
-            {/* Layers */}
             <div className="engine-layers">
-              {/* Layer I */}
               <div className="engine-layer-row">
                 <div className="engine-layer-inner">
                   <div className="engine-numeral">I</div>
@@ -266,10 +345,9 @@ const MainPage = () => {
                 </div>
               </div>
 
-              {/* Layer II — highlighted */}
               <div className="engine-layer-row highlighted">
                 <div className="engine-layer-inner">
-                  <div className="engine-numeral ">II</div>
+                  <div className="engine-numeral">II</div>
                   <div className="engine-accent-line" />
                   <div className="engine-layer-content">
                     <div className="engine-layer-title gold">Derived Intelligence</div>
@@ -280,7 +358,6 @@ const MainPage = () => {
                 </div>
               </div>
 
-              {/* Layer III — highlighted */}
               <div className="engine-layer-row highlighted">
                 <div className="engine-layer-inner">
                   <div className="engine-numeral gold">III</div>
@@ -294,7 +371,6 @@ const MainPage = () => {
                 </div>
               </div>
 
-              {/* Layer IV */}
               <div className="engine-layer-row">
                 <div className="engine-layer-inner">
                   <div className="engine-numeral">IV</div>
@@ -312,27 +388,39 @@ const MainPage = () => {
         </div>
       </section>
 
+      <section className="doctor-section py-5">
+        <div className="container">
+          <div className="text-center mb-5">
+            <h2>Our Expert Doctors</h2>
+            <p>Meet our experienced specialists</p>
+          </div>
 
-      
+          {!isCarouselReady ? (
+            <div className="text-center py-5">
+              <div className="spinner-border" role="status">
+                <span className="visually-hidden">Loading doctors...</span>
+              </div>
+            </div>
+          ) : (
+            <div className="owl-carousel doctor-slider">
+              {renderDoctorCards()}
+            </div>
+          )}
+        </div>
+      </section>
 
       <section className="funfacts" ref={ref}>
         <div className="overlay">
-          <div className="container" style={{
-    textAlign: "center",
-   
-  }}>
-            
-              <h2 style={{
-    fontSize: "35px",
-    color: "#fff",
-    fontWeight: "600",
-  }}>We cannot change yesterday's biology.<br/>We can still change tomorrow's.</h2>
-              <p style={{
-    fontSize: "16px",
-    color: "#fff",
-   
-  }}>Ready to discover how clinical intelligence changes preventive healthcare?</p>
-          
+          <div className="container" style={{ textAlign: "center" }}>
+            <h2 style={{
+              fontSize: "35px",
+              color: "#fff",
+              fontWeight: "600",
+            }}>We cannot change yesterday's biology.<br/>We can still change tomorrow's.</h2>
+            <p style={{
+              fontSize: "16px",
+              color: "#fff",
+            }}>Ready to discover how clinical intelligence changes preventive healthcare?</p>
           </div>
         </div>
       </section>

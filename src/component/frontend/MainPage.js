@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { Helmet } from "react-helmet-async";
 import CountUp from "react-countup";
 import { useInView } from "react-intersection-observer";
@@ -16,6 +16,8 @@ import person3 from "./../../images/testimonial3.jpg";
 const MainPage = () => {
   const carouselRef = useRef(null);
   const isCarouselInitialized = useRef(false);
+  const [OwlCarousel, setOwlCarousel] = useState(null);
+  const [isCarouselReady, setIsCarouselReady] = useState(false);
 
   useEffect(() => {
     // Dynamically import jQuery and owl.carousel
@@ -35,6 +37,11 @@ const MainPage = () => {
         // Import CSS
         await import('owl.carousel/dist/assets/owl.carousel.css');
         await import('owl.carousel/dist/assets/owl.theme.default.css');
+
+        // Import react-owl-carousel dynamically
+        const OwlCarouselModule = await import('react-owl-carousel');
+        setOwlCarousel(() => OwlCarouselModule.default || OwlCarouselModule);
+        setIsCarouselReady(true);
 
         // Initialize carousel after a small delay
         setTimeout(() => {
@@ -72,6 +79,68 @@ const MainPage = () => {
     };
   }, []);
 
+  const doctors = [
+    {
+      id: 1,
+      name: "Dr. John Smith",
+      specialization: "Cardiologist",
+      experience: "12+ Years",
+      image: "https://images.unsplash.com/photo-1612349317150-e413f6a5b16d?w=400"
+    },
+    {
+      id: 2,
+      name: "Dr. Sarah Wilson",
+      specialization: "Neurologist",
+      experience: "10+ Years",
+      image: "https://images.unsplash.com/photo-1594824476967-48c8b964273f?w=400"
+    },
+    {
+      id: 3,
+      name: "Dr. Michael Lee",
+      specialization: "Dentist",
+      experience: "8+ Years",
+      image: "https://images.unsplash.com/photo-1622253692010-333f2da6031d?w=400"
+    },
+    {
+      id: 4,
+      name: "Dr. Emma Brown",
+      specialization: "Dermatologist",
+      experience: "15+ Years",
+      image: "https://images.unsplash.com/photo-1559839734-2b71ea197ec2?w=400"
+    },
+    {
+      id: 5,
+      name: "Dr. David Miller",
+      specialization: "Orthopedic",
+      experience: "14+ Years",
+      image: "https://images.unsplash.com/photo-1537368910025-700350fe46c7?w=400"
+    }
+  ];
+
+  const options = {
+    loop: true,
+    margin: 25,
+    nav: true,
+    dots: false,
+    autoplay: true,
+    autoplayTimeout: 3000,
+    smartSpeed: 800,
+    responsive: {
+      0: {
+        items: 1,
+      },
+      576: {
+        items: 2,
+      },
+      992: {
+        items: 3,
+      },
+      1200: {
+        items: 4,
+      },
+    },
+  };
+
   const { ref, inView } = useInView({
     triggerOnce: true,
     threshold: 0.3,
@@ -91,6 +160,45 @@ const MainPage = () => {
       title: "Quality Doctors",
     },
   ];
+
+  // Render doctor carousel only when OwlCarousel is ready
+  const renderDoctorCarousel = () => {
+    if (!isCarouselReady || !OwlCarousel) {
+      return (
+        <div className="text-center py-5">
+          <div className="spinner-border" role="status">
+            <span className="visually-hidden">Loading...</span>
+          </div>
+        </div>
+      );
+    }
+
+    return (
+      <OwlCarousel className="owl-theme" {...options}>
+        {doctors.map((doctor) => (
+          <div className="item" key={doctor.id}>
+            <div className="doctor-card">
+              <img
+                src={doctor.image}
+                alt={doctor.name}
+                className="doctor-img"
+              />
+              <div className="doctor-body">
+                <h4>{doctor.name}</h4>
+                <span className="speciality">
+                  {doctor.specialization}
+                </span>
+                <p>{doctor.experience} Experience</p>
+                <button className="appointment-btn">
+                  Book Appointment
+                </button>
+              </div>
+            </div>
+          </div>
+        ))}
+      </OwlCarousel>
+    );
+  };
 
   return (
     <div>
@@ -175,64 +283,62 @@ const MainPage = () => {
         </div>
       </section>
 
-<section className="philosophy-section">
-      <div className="philosophy-container">
-
-        {/* Two-column grid */}
-        <div className="philosophy-grid">
-          {/* Left Column */}
-          <div className="philosophy-left">
-          <h2 style={{
-    fontSize: "35px",
-    color: "#fff",
-    fontWeight: "500",
-  }}>Philosophy</h2>
-            <p className="philosophy-text">
-              Predyx was created to support clinical thinking — not automate it, not replace it. The platform organises complexity before the physician begins reasoning. It highlights what deserves attention. It suggests possibilities without making decisions.
-            </p>
-            <p className="philosophy-text">
-              The physician remains exactly where they belong at the center.
-            </p>
-          </div>
-
-          {/* Right Column - Explainability */}
-          <div className="philosophy-right">
-            <div className="explainability-label">
-              Every recommendation survives one question.
+      <section className="philosophy-section">
+        <div className="philosophy-container">
+          {/* Two-column grid */}
+          <div className="philosophy-grid">
+            {/* Left Column */}
+            <div className="philosophy-left">
+              <h2 style={{
+                fontSize: "35px",
+                color: "#fff",
+                fontWeight: "500",
+              }}>Philosophy</h2>
+              <p className="philosophy-text">
+                Predyx was created to support clinical thinking — not automate it, not replace it. The platform organises complexity before the physician begins reasoning. It highlights what deserves attention. It suggests possibilities without making decisions.
+              </p>
+              <p className="philosophy-text">
+                The physician remains exactly where they belong at the center.
+              </p>
             </div>
-            
-            <div className="explainability-statement">
-              <span className="doctor-question">Doctor… why?</span>
+
+            {/* Right Column - Explainability */}
+            <div className="philosophy-right">
+              <div className="explainability-label">
+                Every recommendation survives one question.
+              </div>
               
-              <ul className="explainability-list">
-                <li>
-                  <span className="bullet-point">•</span>
-                  Waist-to-height ratio has progressively increased
-                </li>
-                <li>
-                  <span className="bullet-point">•</span>
-                  Triglycerides elevated, HDL declining across visits
-                </li>
-                <li>
-                  <span className="bullet-point">•</span>
-                  Sleep quality has deteriorated over three assessments
-                </li>
-                <li>
-                  <span className="bullet-point">•</span>
-                  Blood pressure trajectory is worsening
-                </li>
-                <li>
-                  <span className="bullet-point">•</span>
-                  Family history increases lifetime cardiometabolic risk
-                </li>
-              </ul>
+              <div className="explainability-statement">
+                <span className="doctor-question">Doctor… why?</span>
+                
+                <ul className="explainability-list">
+                  <li>
+                    <span className="bullet-point">•</span>
+                    Waist-to-height ratio has progressively increased
+                  </li>
+                  <li>
+                    <span className="bullet-point">•</span>
+                    Triglycerides elevated, HDL declining across visits
+                  </li>
+                  <li>
+                    <span className="bullet-point">•</span>
+                    Sleep quality has deteriorated over three assessments
+                  </li>
+                  <li>
+                    <span className="bullet-point">•</span>
+                    Blood pressure trajectory is worsening
+                  </li>
+                  <li>
+                    <span className="bullet-point">•</span>
+                    Family history increases lifetime cardiometabolic risk
+                  </li>
+                </ul>
+              </div>
             </div>
           </div>
         </div>
-      </div>
+      </section>
 
-     
-    </section>
       {/* ENGINE SECTION - Integrated */}
       <section className="engine-section">
         <div className="container">
@@ -312,28 +418,28 @@ const MainPage = () => {
         </div>
       </section>
 
-
-      
-
       <section className="funfacts" ref={ref}>
         <div className="overlay">
-          <div className="container" style={{
-    textAlign: "center",
-   
-  }}>
-            
-              <h2 style={{
-    fontSize: "35px",
-    color: "#fff",
-    fontWeight: "600",
-  }}>We cannot change yesterday's biology.<br/>We can still change tomorrow's.</h2>
-              <p style={{
-    fontSize: "16px",
-    color: "#fff",
-   
-  }}>Ready to discover how clinical intelligence changes preventive healthcare?</p>
-          
+          <div className="container" style={{ textAlign: "center" }}>
+            <h2 style={{ fontSize: "35px", color: "#fff", fontWeight: "600" }}>
+              We cannot change yesterday's biology.<br/>We can still change tomorrow's.
+            </h2>
+            <p style={{ fontSize: "16px", color: "#fff" }}>
+              Ready to discover how clinical intelligence changes preventive healthcare?
+            </p>
           </div>
+        </div>
+      </section>
+
+      <section className="doctor-section py-5">
+        <div className="container">
+          <div className="text-center mb-5">
+            <h2>Our Expert Doctors</h2>
+            <p>Meet our experienced specialists</p>
+          </div>
+
+          {/* Render carousel conditionally */}
+          {renderDoctorCarousel()}
         </div>
       </section>
 
@@ -366,8 +472,7 @@ const MainPage = () => {
                       aria-expanded="false"
                       id="collapseOne"
                       role="tabpanel"
-                      className="panel-collapse collapse show"
-                    >
+                      className="panel-collapse collapse show">
                       <div className="panel-body">
                         <p>
                           Moimply dummy text of the printing and type
@@ -399,12 +504,9 @@ const MainPage = () => {
                       className="panel-collapse collapse"
                     >
                       <div className="panel-body">
-                        <p>
-                          Moimply dummy text of the printing and type
-                          settingaindustry. Lorem Ipsum has been the industry's
-                          standard dummy text ever since thelong established fact
-                          thaaret
-                        </p>
+                        <p>Moimply dummy text of the printing and type
+                          settingaindustry. Lorem Ipsum has been the industry's standard dummy text ever since thelong established fact
+                          thaaret</p>
                       </div>
                     </div>
                   </div>

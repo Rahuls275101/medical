@@ -3082,3 +3082,86 @@ footer {
           }
         }
      
+
+     .doctor-section{
+    background:#f5f9ff;
+}
+
+.doctor-card{
+    background:#fff;
+    border-radius:15px;
+    overflow:hidden;
+    box-shadow:0 10px 25px rgba(0,0,0,.08);
+    transition:.4s;
+    text-align:center;
+}
+
+.doctor-card:hover{
+    transform:translateY(-8px);
+}
+
+.doctor-img{
+    width:100%;
+    height:280px;
+    object-fit:cover;
+}
+
+.doctor-body{
+    padding:25px;
+}
+
+.doctor-body h4{
+    font-size:22px;
+    font-weight:700;
+    margin-bottom:8px;
+}
+
+.speciality{
+    display:inline-block;
+    background:#0d6efd;
+    color:#fff;
+    padding:6px 15px;
+    border-radius:30px;
+    font-size:14px;
+    margin-bottom:15px;
+}
+
+.doctor-body p{
+    color:#666;
+    margin-bottom:20px;
+}
+
+.appointment-btn{
+    width:100%;
+    border:none;
+    background:#0d6efd;
+    color:#fff;
+    padding:12px;
+    border-radius:50px;
+    font-weight:600;
+    transition:.3s;
+}
+
+.appointment-btn:hover{
+    background:#083b94;
+}
+
+.owl-nav{
+    margin-top:30px !important;
+}
+
+.owl-prev,
+.owl-next{
+    width:45px;
+    height:45px;
+    border-radius:50% !important;
+    background:#0d6efd !important;
+    color:#fff !important;
+    font-size:24px !important;
+    margin:0 5px;
+}
+
+.owl-prev:hover,
+.owl-next:hover{
+    background:#083b94 !important;
+}
