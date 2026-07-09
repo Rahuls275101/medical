@@ -12,7 +12,7 @@ const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <React.StrictMode>
     <HelmetProvider>
-      <BrowserRouter basename="/predy">
+      <BrowserRouter basename="">
         <App />
       </BrowserRouter>
     </HelmetProvider>
