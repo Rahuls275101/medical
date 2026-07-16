@@ -4,7 +4,7 @@ import CountUp from "react-countup";
 import { useInView } from "react-intersection-observer";
 
 import logo from "./logo.png";
-import heroImg from "./../../images/slide1-1.jpg";
+import heroImg from "./../../images/alpha-lab-banner.webp";
 import about from "./../../images/about2.jpg";
 import about2 from "./../../images/about2.png";
 import bgImage from "./../../images/figure2.jpg";
@@ -187,35 +187,12 @@ const MainPage = () => {
         <title>About US - My Website</title>
       </Helmet>
 
-      <section className="hero-section"
-        style={{
-          backgroundImage: `url(${heroImg})`,
-          backgroundSize: "cover",
-          backgroundPosition: "center",
-          backgroundRepeat: "no-repeat",
-        }}
-      >
-        <div className="container p-0">
-          <div className="row g-0 align-items-center">
-            <div className="col-lg-5 hero-content">
-              <div className="content">
-                <h1>
-                  We take care of your
-                  <br />
-                  healthy health.
-                </h1>
-                <p>
-                  Simply dummy text of the printing typesetting ipsum dolor
-                  consecte dipiscing.
-                </p>
-                <a href="/" className="btn btn-primary hero-btn">
-                  READ MORE
-                  <i className="bi bi-chevron-right ms-2"></i>
-                </a>
-              </div>
-            </div>
-          </div>
-        </div>
+      <section className="hero-section">
+        <img
+                    src={heroImg}
+                    alt="About us"
+                    className="img-fluid"
+                  />
       </section>
 
       <section className="about-wrap-layout5">
