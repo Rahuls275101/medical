@@ -14,7 +14,7 @@ import SubAdmin from './component/admin/SubAdmin'
 import Doctors from './component/admin/Doctors'
 import ProfileSettings from './component/admin/ProfileSettings'
 import Assessments from './component/admin/Assessments'
-
+import ECGReports from './component/admin/ECGReports'
 
 
 
@@ -73,7 +73,8 @@ const BackendRoutes = () => {
         { path: 'doctors', element: <PrivateRoute path="clients" element={<Doctors />} /> },
         { path: 'settings', element: <PrivateRoute path="clients" element={<ProfileSettings />} /> },
         { path: 'report', element: <PrivateRoute path="clients" element={<Assessments />} /> },
-
+        { path: 'ecg-reports', element: <PrivateRoute path="clients" element={<ECGReports />} /> },
+        
         
       ],
     },
