@@ -58,24 +58,101 @@ function Footer() {
             </div>
           </div>
         </div>
-        <div className="single-item col-lg-3 col-md-6 col-12">
+                
+
+
+        <div className="single-item col-lg-2 col-md-6 col-12">
           <div className="footer-box">
             <div className="footer-header">
-              <h3>Quick Links</h3>
+              <h3>Platform</h3>
             </div>
             <div className="footer-quick-link">
               <ul>
                 <li>
                 {" "}
-                  <a href="#">Home</a>{" "}
+                  <a href="#">Clinical Intelligence</a>{" "}
                 </li>
                 <li>
                   {" "}
+                  <a href="#">How It Works</a>{" "}
+                </li>
+                <li>
+                  {" "}
+                  <a href="#">Science</a>{" "}
+                </li>
+                <li>
+                  {" "}
+                  <a href="#">Organ Trajectories</a>{" "}
+                </li>
+                <li>
+                  {" "}
+                  <a href="#">Explainability</a>{" "}
+                </li>
+               
+              </ul>
+            </div>
+          </div>
+        </div>
+        
+
+
+
+        <div className="single-item col-lg-2 col-md-6 col-12">
+          <div className="footer-box">
+            <div className="footer-header">
+              <h3>Products</h3>
+            </div>
+            <div className="footer-departments">
+             <ul>
+                <li>
+                {" "}
                   <a href="#">Predyx IQ Quick</a>{" "}
                 </li>
                 <li>
                   {" "}
                   <a href="#">Predyx IQ</a>{" "}
+                </li>
+                <li>
+                  {" "}
+                  <a href="#">Corporate</a>{" "}
+                </li>
+                <li>
+                  {" "}
+                  <a href="#">Population</a>{" "}
+                </li>
+                <li>
+                  {" "}
+                  <a href="#">Product Roadmap</a>{" "}
+                </li>
+               
+              </ul>
+            </div>
+          </div>
+        </div>
+
+
+        <div className="single-item col-lg-2 col-md-6 col-12">
+          <div className="footer-box">
+            <div className="footer-header">
+              <h3>Company</h3>
+            </div>
+            <div className="footer-departments">
+             <ul>
+                <li>
+                {" "}
+                  <a href="#">About</a>{" "}
+                </li>
+                <li>
+                  {" "}
+                  <a href="#">Who We Serve</a>{" "}
+                </li>
+                <li>
+                  {" "}
+                  <a href="#">Resources</a>{" "}
+                </li>
+                <li>
+                  {" "}
+                  <a href="#">Partnerships</a>{" "}
                 </li>
                 <li>
                   {" "}
@@ -86,65 +163,52 @@ function Footer() {
             </div>
           </div>
         </div>
+
         <div className="single-item col-lg-2 col-md-6 col-12">
           <div className="footer-box">
             <div className="footer-header">
-              <h3>Departments</h3>
+              <h3>Legal</h3>
             </div>
             <div className="footer-departments">
-              <ul>
+             <ul>
                 <li>
-                  <a href="single-departments.html">Dental Care</a>
+                {" "}
+                  <a href="#">Privacy Policy</a>{" "}
                 </li>
                 <li>
-                  <a href="single-departments.html">Medicine</a>
+                  {" "}
+                  <a href="#">Terms of Use</a>{" "}
                 </li>
                 <li>
-                  <a href="single-departments.html">Orthopedic</a>
+                  {" "}
+                  <a href="#">Clinical Disclaimer</a>{" "}
                 </li>
                 <li>
-                  <a href="single-departments.html">Emergency</a>
+                  {" "}
+                  <a href="#">Consent & Data Processing </a>{" "}
                 </li>
                 <li>
-                  <a href="single-departments.html">Skilled Doctors</a>
+                  {" "}
+                  <a href="#">Cookie Policy</a>{" "}
                 </li>
-                <li>
-                  <a href="single-departments.html">Certified Clinic</a>
+                 <li>
+                  {" "}
+                  <a href="#">Data Security</a>{" "}
                 </li>
+               
               </ul>
             </div>
           </div>
         </div>
-        <div className="single-item col-lg-3 col-md-6 col-12">
-          <div className="footer-box">
-            <div className="footer-header">
-              <h3>Connect with us</h3>
-            </div>
-            <div className="footer-contact-info">
-              <ul>
-                <li>
-                  <i className="fas fa-map-marker-alt" />
-                  59 Street, 1200 Techpark
-                </li>
-                <li>
-                  <i className="fas fa-phone" />
-                  +91 9876543210
-                </li>
-                <li>
-                  <i className="far fa-envelope" />
-                  info@predyxiq.com
-                </li>
-              </ul>
-            </div>
-          </div>
-        </div>
+       
       </div>
     </div>
   </section>
   <section className="footer-center-wrap">
     <div className="container">
       <div className="copyright"style={{textAlign: 'center'}}>
-      Copyright @ 2026 PREDYX IQ. All Rights Reserved.
+      © 2026 Predyxiq. All rights reserved. Predyxiq provides clinical decision support and preventive health intelligence. It is not a diagnostic tool and does not replace professional medical judgment, clinical evaluation, or personalized treatment.
+<br/><br/>
       <a href="https://www.starwebmaker.com/" target="_blank">
         {" "}
         Designed by Star Web Maker

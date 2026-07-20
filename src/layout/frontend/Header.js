@@ -17,20 +17,21 @@ function Header() {
               <i className="fas fa-phone" />
               Call: +91 9876543210
             </li>
-            <li>
-              {" "}
-              <i className="fas fa-map-marker-alt" />
-              59 Street, 1200 Techpark
-            </li>
+           
+           
+          </ul>
+        </div>
+        <div className="col-xl-4 d-none d-xl-block header-contact-layout1">
+          <ul style={{justifyContent: 'end',}}>
+     
+           
             <li>
               {" "}
               <i className="far fa-envelope-open" />
               info@predyxiq.com
             </li>
           </ul>
-        </div>
-        <div className="col-xl-4 d-none d-xl-block">
-          <ul className="header-social-layout1">
+          {/* <ul className="header-social-layout1">
             <li>
               {" "}
               <a href="#">
@@ -59,7 +60,7 @@ function Header() {
                 <i className="fab fa-skype" />{" "}
               </a>{" "}
             </li>
-          </ul>
+          </ul> */}
         </div>
       </div>
     </div>
@@ -67,7 +68,7 @@ function Header() {
   <div className="header-menu-area header-menu-layout1">
     <div className="container-fluid">
       <div className="row no-gutters d-flex align-items-center">
-        <div className="col-lg-3 col-md-3 logo-area-layout1">
+        <div className="col-lg-2 col-md-2 logo-area-layout1">
      
           <Link to={baseUrl + '/'} className="temp-logo">
     
@@ -79,24 +80,30 @@ function Header() {
 />
 </Link>
         </div>
-        <div className="col-lg-6 col-md-6 possition-static">
+        <div className="col-lg-7 col-md-7 possition-static">
           <div className="template-main-menu">
             <nav id="dropdown">
               <ul>
                 <li>
-                   <Link to={baseUrl + '/'}>Home</Link>
+                <Link to={baseUrl + '/'}>Home</Link>
                 </li>
                 <li>
-                <Link to={baseUrl + '/predyx-assessment'}>Predyx IQ Quick</Link>
+                <Link to={baseUrl + '/predyx-assessment'}>Clinical Intelligence</Link>
                 </li>
                 <li>
-                <Link >Predyx IQ </Link>
+                <Link >Products </Link>
                 </li>
                 <li>
-                <Link to={baseUrl + '/about'}>About Us</Link>
+                <Link to={baseUrl + '/about'}>How It Works</Link>
                 </li>
                 <li>
-                <Link to={baseUrl + '/contact'}>Contact</Link>
+                <Link to={baseUrl + '/contact'}>Science</Link>
+                </li>
+                <li>
+                <Link to={baseUrl + '/contact'}>Who We service</Link>
+                </li>
+                <li>
+                <Link to={baseUrl + '/contact'}>About</Link>
                 </li>
               </ul>
             </nav>
@@ -109,6 +116,13 @@ function Header() {
                 {" "}
                 <a href="#" className="action-items-primary-btn">
                   Request a Demo
+                  <i className="fas fa-chevron-right" />
+                </a>{" "}
+              </li>
+              <li>
+                {" "}
+                <a href="#" className="action-items-primary-btn">
+                  Login
                   <i className="fas fa-chevron-right" />
                 </a>{" "}
               </li>
