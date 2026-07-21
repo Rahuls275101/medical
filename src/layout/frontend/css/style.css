@@ -261,10 +261,14 @@ img {
 
 /* Main Header */
 .header-menu-area {
-  padding: 10px 0;
   background: #ffffff;
 }
-
+.navbar-light .navbar-nav .nav-link {
+    color: #1a1a2e !important;
+    font-size: 15px !important;
+    padding: 12px !important;
+    font-weight: 600 !important;
+}
 .header-menu-area .container-fluid {
   padding: 0 30px;
 }
@@ -1382,6 +1386,15 @@ footer {
 
 /* Mobile */
 @media (max-width: 767px) {
+  .template-main-menu {
+    display: block;
+    justify-content: left; padding-top: 20px;
+}.navbar-light .navbar-nav .nav-link {
+    color: #1a1a2e !important;
+    font-size: 15px !important;
+    padding: 8px !important;
+    font-weight: 600 !important;
+}
   .header-top-bar {
       display: none !important;
   }
