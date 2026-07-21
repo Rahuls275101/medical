@@ -88,7 +88,7 @@ function Header() {
                 <Link to={baseUrl + '/'}>Home</Link>
                 </li>
                 <li>
-                <Link to={baseUrl + '/predyx-assessment'}>Clinical Intelligence</Link>
+                <Link to={baseUrl + '/clinical-intelligence'}>Clinical Intelligence</Link>
                 </li>
                 <li>
                 <Link >Products </Link>
@@ -97,7 +97,7 @@ function Header() {
                 <Link to={baseUrl + '/about'}>How It Works</Link>
                 </li>
                 <li>
-                <Link to={baseUrl + '/contact'}>Science</Link>
+                <Link to={baseUrl + '/science-of-clinical-intelligence'}>Science</Link>
                 </li>
                 <li>
                 <Link to={baseUrl + '/contact'}>Who We service</Link>
