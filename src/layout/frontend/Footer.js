@@ -1,4 +1,6 @@
 import React from "react";
+import { Link } from 'react-router-dom';
+import { baseUrl } from '../../config';
 import logo from '../../images/logo.png';
 import logo1 from '../../images/logo1.png';
 
@@ -155,8 +157,8 @@ function Footer() {
                   <a href="#">Partnerships</a>{" "}
                 </li>
                 <li>
-                  {" "}
-                  <a href="#">Contact</a>{" "}
+                  <Link to={baseUrl + '/contact'}>Contact</Link>
+                  
                 </li>
                
               </ul>

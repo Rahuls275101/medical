@@ -4165,7 +4165,22 @@ font-size:24px;
     color: #143b63;
     margin: 10px 0 5px;
 }
-
+.mns .predyx-content-box {
+    background: #fff;
+    padding: 20px 20px;
+    border-radius: 12px;
+    box-shadow: 0 15px 40px rgba(0, 0, 0, .08);
+    border-left: 6px solid #4a93d9; margin-bottom: 20px;
+}
+.quote-box {
+    margin-top: 30px;
+    background: linear-gradient(135deg, #143b63, #1d5f8c);
+    color: #fff;
+    padding: 45px;
+    border-radius: 15px;
+    text-align: center;
+    box-shadow: 0 20px 45px rgba(20, 59, 99, .35);
+}
 .action-items-primary-btn1 {
     display: inline-flex;
     align-items: center;
@@ -5374,4 +5389,137 @@ font-size:24px;
         padding:14px;
     }
 
+}
+.predyx-directory-left{ padding-left: 30px !important;}
+
+.predyx-contact-section{
+    background:#fff;
+}
+
+.predyx-contact-title{
+    font-size: 31px;
+    font-weight: 700;
+    color: #143b63;
+    margin-bottom: 0px;
+}
+.predyx-contact-title span{color: #4a93d9;}
+.predyx-contact-box{
+    border:1px solid #dfe5eb;
+}
+
+.predyx-directory-left{
+    padding:40px;
+}
+
+.predyx-directory-title {
+    font-size: 26px;
+    font-weight: 700;
+    margin-bottom: 35px;
+    color: #1f2937;
+}
+
+.predyx-directory-item{
+    margin-bottom:32px;
+}
+
+.predyx-directory-item h5 {
+    font-size: 21px;
+    font-weight: 600;
+    color: #212529;
+    margin-bottom: 2px;
+}
+
+.predyx-directory-item a {
+    display: inline-block;
+    color: #4498dc;
+    font-size: 17px;
+    font-weight: 600;
+    text-decoration: none;
+    margin-bottom: 1px;
+}
+
+.predyx-directory-item a:hover{
+    color:#1b5c5b;
+    text-decoration:none;
+}
+
+.predyx-directory-item p{
+  
+}
+
+.predyx-headquarter-right{
+    border-left:1px solid #dfe5eb;
+    background:#f9fbfd;
+}
+
+.predyx-headquarter-box{
+    padding:40px;
+    height:100%;
+}
+
+.predyx-headquarter-title {
+    font-size: 24px;
+    font-weight: 700;
+    color: #1f2937;
+    margin-bottom: 15px;
+}
+
+.predyx-map-placeholder{
+    border:1px dashed #c9d2dc;
+    background:#fff;
+    height:230px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    color:#7b8794;
+    margin:35px 0;
+}
+
+.predyx-meeting-content h5 {
+    font-size: 23px;
+    font-weight: 600;
+    margin-bottom: 10px;
+}
+
+
+
+.predyx-calendar-btn{
+    background:#0f766e;
+    color:#fff;
+    padding:12px 28px;
+    border-radius:4px;
+    font-weight:600;
+}
+
+.predyx-calendar-btn:hover{
+    background:#0b5d57;
+    color:#fff;
+}
+
+@media(max-width:991px){
+
+    .predyx-headquarter-right{
+        border-left:0;
+        border-top:1px solid #dfe5eb;
+    }
+
+    .predyx-contact-title{
+        font-size:34px;
+    }
+
+    .predyx-directory-title,
+    .predyx-headquarter-title{
+        font-size:26px;
+    }
+
+    .predyx-directory-item h5,
+    .predyx-meeting-content h5{
+        font-size:22px;
+    }
+
+    .predyx-directory-item a,
+    .predyx-directory-item p,
+    .predyx-meeting-content p{
+        font-size:17px;
+    }
 }
