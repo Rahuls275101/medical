@@ -32,27 +32,27 @@ const MainPage = () => {
     {
       title: "Clinical Intelligence for Physicians & Clinics",
       desc: "Helping physicians organise fragmented clinical information into transparent, explainable Clinical Intelligence that supports better clinical decisions.",
-      link: "/clinical-intelligence-for-laboratories-diagnostics",
+      link: "/physicians-clinics",
     },
     {
       title: "Clinical Intelligence for Corporate Health",
       desc: "  Transforming workforce health programmes into longitudinal preventive health intelligence.",
-      link: "/clinical-intelligence-for-laboratories-diagnostics",
+      link: "/corporate-health",
     },
     {
       title: "Clinical Intelligence for Insurance",
       desc: "Supporting preventive engagement and risk intelligence through structured physiological understanding.",
-      link: "/clinical-intelligence-for-laboratories-diagnostics",
+      link: "/insurance",
     },
     {
       title: "Clinical Intelligence for Hospitals & Health Systems",
       desc: "Connecting departments, specialties and patient journeys through integrated Clinical Intelligence.",
-      link: "/clinical-intelligence-for-laboratories-diagnostics",
+      link: "/health-system",
     },
     {
       title: "Clinical Intelligence for Laboratories & Diagnostics",
       desc: "  Transforming laboratory measurements into meaningful physiological interpretation and Clinical Intelligence.",
-      link: "/clinical-intelligence-for-laboratories-diagnostics",
+      link: "/laboratories-diagnostics",
     },
   ];
 

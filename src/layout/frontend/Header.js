@@ -66,7 +66,7 @@ function Header() {
                 </div>
 
                 {/* Navigation Menu */}
-                <div className={`col-lg-7 col-md-7 ${isMenuOpen ? '' : 'd-none d-lg-block'}`}>
+                <div className={`col-lg-8 col-md-8 ${isMenuOpen ? '' : 'd-none d-lg-block'}`}>
                   <div className="template-main-menu">
                     <ul className="navbar-nav">
                       <li className="nav-item">
@@ -75,27 +75,34 @@ function Header() {
                       <li className="nav-item">
                         <Link to={baseUrl + '/clinical-intelligence'} className="nav-link">Clinical Intelligence</Link>
                       </li>
+                      
                       <li className="nav-item">
                         <Link className="nav-link">Products</Link>
                       </li>
                       <li className="nav-item">
-                        <Link to={baseUrl + '/about'} className="nav-link">How It Works</Link>
+                        <Link to={baseUrl + '/'} className="nav-link">How It Works</Link>
+                      </li>
+                      <li className="nav-item">
+                        <Link to={baseUrl + '/platform'} className="nav-link">Platform</Link>
                       </li>
                       <li className="nav-item">
                         <Link to={baseUrl + '/science-of-clinical-intelligence'} className="nav-link">Science</Link>
                       </li>
                       <li className="nav-item">
-                        <Link to={baseUrl + '/contact'} className="nav-link">Who We service</Link>
+                        <Link to={baseUrl + '/predyxiq-services'} className="nav-link">Who We Service</Link>
                       </li>
                       <li className="nav-item">
-                        <Link to={baseUrl + '/contact'} className="nav-link">About</Link>
+                        <Link to={baseUrl + '/predyxiq-quick'} className="nav-link">PredyxIQ Quick</Link>
+                      </li>
+                      <li className="nav-item">
+                        <Link to={baseUrl + '/about'} className="nav-link">About</Link>
                       </li>
                     </ul>
                   </div>
                 </div>
 
                 {/* Action Buttons */}
-                <div className="col-lg-3 col-md-3 d-none d-lg-block">
+                <div className="col-lg-2 col-md-2 d-none d-lg-block">
                   <div className="header-action-items-layout1">
                     <ul className="d-flex" style={{ listStyle: 'none', margin: 0, padding: 0 }}>
                       <li>

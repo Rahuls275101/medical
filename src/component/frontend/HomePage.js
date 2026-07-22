@@ -13,7 +13,6 @@ import person1 from "./../../images/testimonial3.jpg";
 import person2 from "./../../images/testimonial3.jpg";
 import person3 from "./../../images/testimonial3.jpg";
 import medicalImg from "./../../images/clinical.png";
-import workflow from "./../../images/clinical1.png"; // Replace with your image
 import dcs from "./../../images/dcs.png"; // Replace with your image
 
 // Import owl carousel CSS
@@ -98,28 +97,28 @@ const MainPage = () => {
 
   const products = [
     {
-      title: "Predyxiq  Quick",
+      title: "PredyxIQ  Quick",
       status: "Launch Product",
       badge: "badge-success",
       description:
         "Rapid preventive screening for everyday practice. A streamlined assessment tool optimized for primary care, corporate health checkups, and rapid diagnostic environments. ",
     },
     {
-      title: "Predyxiq ",
+      title: "PredyxIQ ",
       status: "In Development / Early Access Deployments",
       badge: "badge-warning",
       description:
         "Deep, longitudinal clinical intelligence. Our core platform integrates rich medical histories, deep biomarkers, advanced functional imaging, and physiological signals to map long-term organ trajectories.",
     },
     {
-      title: "Predyxiq  Corporate",
+      title: "PredyxIQ  Corporate",
       status: "Pilot Partnerships Active",
       badge: "badge-primary",
       description:
         "Personal health insights with enterprise-grade wellness visibility. Individuals receive comprehensive preventive reports while organizations gain anonymous, aggregated wellness analytics.",
     },
     {
-      title: "Predyxiq  Population",
+      title: "PredyxIQ  Population",
       status: "Partnership Development",
       badge: "badge-info",
       description:
@@ -213,17 +212,17 @@ const MainPage = () => {
     {
       icon: "fas fa-file-medical",
       title: "Not another electronic record",
-      text: "Electronic records store what has already been observed. Predyxiq helps physicians understand how those observations relate and what they collectively imply.",
+      text: "Electronic records store what has already been observed. PredyxIQ helps physicians understand how those observations relate and what they collectively imply.",
     },
     {
       icon: "fas fa-chart-line",
       title: "Not another isolated risk score",
-      text: "A single risk score simplifies complexity until it conceals more than it reveals. Predyxiq preserves the clinical integrity of individual physiological pathways.",
+      text: "A single risk score simplifies complexity until it conceals more than it reveals. PredyxIQ preserves the clinical integrity of individual physiological pathways.",
     },
     {
       icon: "fas fa-brain",
       title: "Not automated diagnosis",
-      text: "Predyxiq organizes physiological complexity to support clinical reasoning. Diagnosis and treatment remain entirely the responsibility of the physician.",
+      text: "PredyxIQ organizes physiological complexity to support clinical reasoning. Diagnosis and treatment remain entirely the responsibility of the physician.",
     },
   ];
 
@@ -460,7 +459,7 @@ const MainPage = () => {
               obvious.
             </h3>
             <p>
-              Predyxiq transforms fragmented clinical observations into clear,
+              PredyxIQ transforms fragmented clinical observations into clear,
               explainable biological pathways. By connecting lifestyle signals,
               medical history, biomarkers, and physical measurements, it maps
               out organ-system trajectories that deserve clinical focus—while
@@ -494,10 +493,10 @@ const MainPage = () => {
           <div className="row justify-content-center">
             <div className="col-lg-10 text-center">
               <h2 className="section-title">
-                Predyxiq <span>Clinical Intelligence</span>
+                PredyxIQ <span>Clinical Intelligence</span>
               </h2>
               <p className="subtitle">
-                Predyxiq doesn't collect more information. It helps physicians
+                PredyxIQ doesn't collect more information. It helps physicians
                 understand the information they already have.
               </p>
             </div>
@@ -516,7 +515,7 @@ const MainPage = () => {
                 </p>
                 <br />
                 <p className="mb-0">
-                  Predyxiq transforms isolated clinical signals into a unified
+                  PredyxIQ transforms isolated clinical signals into a unified
                   biological understanding. By identifying relationships between
                   variables, mapping latent physiological states, and predicting
                   organ trajectories, it delivers meaningful clinical
@@ -624,7 +623,7 @@ const MainPage = () => {
         <div className="container">
           <div className="text-center mb-5">
             <h2 className="display-title">
-              What <span>Predyxiq</span> is
+              What <span>PredyxIQ</span> is
             </h2>
             <h5 className="mini-title">A NEW LAYER IN HEALTHCARE</h5>
             <h3 className="main-title">
@@ -633,7 +632,7 @@ const MainPage = () => {
               <strong>A clinical intelligence platform.</strong>
             </h3>
             <p className="intro-text mt-4">
-              Predyxiq is a clinical intelligence platform powered by Predyx—a
+              PredyxIQ is a clinical intelligence platform powered by Predyx—a
               deterministic, rule-based medical reasoning engine. It does not
               replace the electronic health record, nor the physician's
               diagnostic role. Instead, it introduces a highly structured
@@ -660,13 +659,13 @@ const MainPage = () => {
         <div className="container">
           <div className="text-center mb-2">
             <h2 className="section-title">
-              What <span>Predyxiq</span> Does
+              What <span>PredyxIQ</span> Does
             </h2>
             <h3 className="section-subtitle">
               From fragmented observations to meaningful clinical understanding.
             </h3>
             <p className="section-text">
-              Predyxiq translates disconnected clinical signals into a cohesive,
+              PredyxIQ translates disconnected clinical signals into a cohesive,
               highly structured understanding of a patient's overall biology.
             </p>
           </div>
@@ -711,7 +710,7 @@ const MainPage = () => {
 
             <p className="lead-text mt-2">
               A single laboratory value or physical measurement captures only
-              one moment in time. Predyxiq identifies physiological direction by
+              one moment in time. PredyxIQ identifies physiological direction by
               understanding how organ systems evolve, enabling clinically
               actionable insights before disease progression becomes obvious.
             </p>
@@ -763,7 +762,7 @@ const MainPage = () => {
               <p className="section-text">
                 Clinical support tools are valuable only when physicians
                 understand exactly how every recommendation was produced.
-                Predyxiq exposes the clinical rules, evidence and reasoning
+                PredyxIQ exposes the clinical rules, evidence and reasoning
                 behind every conclusion.
               </p>
             </div>
@@ -831,7 +830,7 @@ const MainPage = () => {
             </h3>
 
             <p className="section-text">
-              Predyxiq organizes complex clinical signals before the
+              PredyxIQ organizes complex clinical signals before the
               consultation begins, highlighting meaningful physiological
               patterns while leaving diagnosis, judgment and treatment decisions
               entirely to the physician.
@@ -839,26 +838,8 @@ const MainPage = () => {
           </div>
 
           <div className="row align-items-center philosophy-wrapper">
-            <div className="col-lg-5">
-              <div className="philosophy-card left-card">
-                <h4>Predyxiq Intelligence</h4>
-
-                <ul>
-                  <li>Connects fragmented clinical signals</li>
-                  <li>Recognizes biological relationships</li>
-                  <li>Provides explainable clinical reasoning</li>
-                  <li>Highlights meaningful trajectories</li>
-                </ul>
-              </div>
-            </div>
-
-            <div className="col-lg-2 text-center">
-              <div className="center-circle">
-                <i className="fas fa-handshake"></i>
-              </div>
-            </div>
-
-            <div className="col-lg-5">
+            
+ <div className="col-lg-5">
               <div className="philosophy-card right-card">
                 <h4>Physician Expertise</h4>
 
@@ -870,13 +851,31 @@ const MainPage = () => {
                 </ul>
               </div>
             </div>
+            <div className="col-lg-2 text-center">
+              <div className="center-circle">
+                <i className="fas fa-handshake"></i>
+              </div>
+            </div>
+<div className="col-lg-5">
+              <div className="philosophy-card left-card">
+                <h4>PredyxIQ Intelligence</h4>
+
+                <ul>
+                  <li>Connects fragmented clinical signals</li>
+                  <li>Recognizes biological relationships</li>
+                  <li>Provides explainable clinical reasoning</li>
+                  <li>Highlights meaningful trajectories</li>
+                </ul>
+              </div>
+            </div>
+           
           </div>
 
           <div className="quote-box">
             <i className="fas fa-quote-left"></i>
 
             <h4>
-              Predyxiq supports the decision.
+              PredyxIQ supports the decision.
               <span> The physician makes it.</span>
             </h4>
           </div>
@@ -942,7 +941,7 @@ const MainPage = () => {
               From Health Data to Clinical Intelligence
             </p>
           </div>
-          <div className="row ">
+          <div className="row justify-content-center">
             {/* Left Content */}
             <div className="col-lg-6 pr-3">
               {steps.map((step, index) => (
@@ -965,28 +964,24 @@ const MainPage = () => {
                   >
                     {index + 1}
                   </div>
+                  
 
                   <div>
                     <h5 className="font-weight-bold mb-1">{step.title}</h5>
 
                     <p className="text-muted mb-0">{step.text}</p>
                   </div>
+                  <div className="predyx4-arrow">&#8595;</div>
                 </div>
+
+                
+
+                
               ))}
             </div>
 
             {/* Right Image */}
-            <div className="col-lg-6 text-center">
-              <img
-                src={workflow}
-                alt="How It Works"
-                className="img-fluid"
-                style={{
-                  borderRadius: "20px",
-                  boxShadow: "0 15px 40px rgba(0,0,0,.15)",
-                }}
-              />
-            </div>
+            
           </div>
         </div>
       </section>
