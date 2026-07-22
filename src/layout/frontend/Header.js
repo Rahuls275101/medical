@@ -106,16 +106,13 @@ function Header() {
                   <div className="header-action-items-layout1">
                     <ul className="d-flex" style={{ listStyle: 'none', margin: 0, padding: 0 }}>
                       <li>
-                        <a href="#" className="action-items-primary-btn">
-                          Request a Demo
-                          <i className="fas fa-chevron-right" />
-                        </a>
+                      <Link to={baseUrl + '/contact'} onClick={() => window.scrollTo(0, 0)} className="action-items-primary-btn"> Request a Demo
+                          <i className="fas fa-chevron-right" /></Link>
+                   
                       </li>
                       <li>
-                        <a href="#" className="action-items-primary-btn">
-                          Login
-                          <i className="fas fa-chevron-right" />
-                        </a>
+                      <Link to={baseUrl + '/login'} onClick={() => window.scrollTo(0, 0)} className="action-items-primary-btn"> Login <i className="fas fa-chevron-right" /></Link>
+                      
                       </li>
                     </ul>
                   </div>

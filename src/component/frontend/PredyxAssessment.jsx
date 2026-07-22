@@ -1,5 +1,6 @@
 // pages/PredyxAssessment.jsx - Complete Version With All Document Fields
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect} from 'react';
+import { useParams, useNavigate } from 'react-router-dom';
 import { apiBaseUrl } from '../../config';
 import axios from 'axios';
 import jsPDF from 'jspdf';
@@ -28,6 +29,8 @@ const HomePage = () => {
         prior_cad: false
     });
 
+    const { id } = useParams();
+    const navigate = useNavigate();
     const [fieldErrors, setFieldErrors] = useState({});
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(null);
@@ -38,7 +41,53 @@ const HomePage = () => {
     const [currentStep, setCurrentStep] = useState(1);
     const [pdfLoading, setPdfLoading] = useState(false);
     const [printLoading, setPrintLoading] = useState(false);
+    const [showLogoutModal, setShowLogoutModal] = useState(false);
+
+    useEffect(() => {
+        if (id) {
+        
+        } else {
+          // Agar URL mein ID nahi hai to localStorage se lo
+          const storedUser = localStorage.getItem('user');
+          if (storedUser) {
+            const user = JSON.parse(storedUser);
+            if (user?.patient_id) {
+             
+            } else {
+              setError('User ID not found');
+              setLoading(false);
+            }
+          } else {
+            setError('Please login to continue');
+            setLoading(false);
+          }
+        }
+      }, [id]);
     
+
+  // ✅ Logout Function
+  const handleLogout = () => {
+    // Clear all localStorage data
+    localStorage.removeItem('authenticated');
+    localStorage.removeItem('user');
+    localStorage.removeItem('userEmail');
+    localStorage.removeItem('token');
+    localStorage.removeItem('userRole');
+    localStorage.removeItem('rememberMe');
+    
+    // Close modal
+    setShowLogoutModal(false);
+    
+    // Redirect to login page
+    navigate('/login');
+  };
+
+  // ✅ Confirm Logout
+  const confirmLogout = () => {
+    setShowLogoutModal(true);
+  };
+
+
     const reportRef = useRef(null);
 
     // Validation function

@@ -115,7 +115,7 @@ const UserLogin = ({ onLogin }) => {
         }
         
         // Navigate to dashboard
-        navigate('/user/dashboard');
+        navigate();
       } else {
         setApiError(response.data.message || 'Login failed. Please try again.');
       }

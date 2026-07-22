@@ -15,7 +15,6 @@ const UserRoutes = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    // Check for authentication state in localStorage
     const isAuthenticated = localStorage.getItem('authenticated') === 'true';
     const userRole = localStorage.getItem('userRole');
     
@@ -30,7 +29,15 @@ const UserRoutes = () => {
     localStorage.setItem('authenticated', 'true');
     localStorage.setItem('userRole', 'user');
     setAuthenticated(true);
-    navigate('/user/dashboard');
+    
+    // ✅ Redirect to same page after login
+    const redirectUrl = localStorage.getItem('redirectUrl');
+    if (redirectUrl) {
+      localStorage.removeItem('redirectUrl');
+      navigate(redirectUrl);
+    } else {
+      navigate('/login');
+    }
   };
 
   const handleLogout = () => {
@@ -39,17 +46,24 @@ const UserRoutes = () => {
     localStorage.removeItem('userRole');
     localStorage.removeItem('token');
     localStorage.removeItem('user');
+    localStorage.removeItem('redirectUrl');
     navigate('/login');
   };
 
-  const PrivateRoute = ({ path, element }) => {
-    return authenticated ? element : <Navigate to={baseUrl + '/login'} />;
+  const PrivateRoute = ({ element }) => {
+    if (!authenticated) {
+      // ✅ Save current URL for redirect after login
+      localStorage.setItem('redirectUrl', window.location.pathname);
+      return <Navigate to="/login" />;
+    }
+    return element;
   };
 
   const routes = useRoutes([
-    // User Dashboard Route (Protected)
+
+    // ✅ User Dashboard Route
     {
-      path: '/user',
+      path: '/',
       element: authenticated ? (
         <>
           <WebsiteLayout onLogout={handleLogout}>
@@ -61,25 +75,26 @@ const UserRoutes = () => {
       ),
       children: [
         { 
-          path: '/user/dashboard', 
-          element: <PrivateRoute path="dashboard" element={<UserDashboard />} /> 
-        },
-        { 
-            path: 'predyx-assessment', 
-            element: <PrivateRoute path="dashboard" element={<PredyxAssessment />} /> 
+            path: '/predyx-assessment', 
+            element: <PrivateRoute element={<PredyxAssessment />} /> 
           },
+        { 
+          path: '/user/dashboard', 
+          element: <PrivateRoute element={<UserDashboard />} /> 
+        },
       ],
     },
-    // Login Route (Public)
+    // ✅ Login Route (Public)
     {
       path: '/login',
-      element: authenticated ? <Navigate to="/user/dashboard" /> : <UserLogin onLogin={handleLogin} />
+      element: authenticated ? <Navigate to="/predyx-assessment" /> : <UserLogin onLogin={handleLogin} />
     },
-    // Register Route (Public)
+    // ✅ Register Route (Public)
     {
       path: '/register',
-      element: authenticated ? <Navigate to="/user/dashboard" /> : <UserRegister onLogin={handleLogin} />
+      element: authenticated ? <Navigate to="/predyx-assessment" /> : <UserRegister onLogin={handleLogin} />
     },
+   
   ]);
 
   return routes;
