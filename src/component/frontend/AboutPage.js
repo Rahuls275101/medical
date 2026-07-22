@@ -375,7 +375,53 @@ The greatest promise in modern medicine lies not in detecting end-stage disease 
         </div>
       </section>
       
+ <section className="explain-section predyx-section">
+        <div className="container">
+      
+              <div className="predyx-header text-center mb-4 pr-5 pl-6">
+                <h2 className="predyx-main-title mt-2">
+                  A Note from <span>   the Founder </span>
+                </h2>
+               
+              </div>
+              <div
+                className="predyx-content-box">
+                <div className="info-card" style={{ padding: "0px" }}>
+                
+                   
+<p>Predyx did not begin as a business plan. It began as a question, and the question followed me
+for more than twenty years of clinical practice before I understood what it was asking of me.</p>
+<p>I spent those years watching physicians work inside an abundance of information —
+laboratory reports, imaging studies, physiological measurements, the opinions of specialists,
+more data than any single mind could hold at once. And yet the harder task never changed. It
+was never the gathering of information. It was the bringing of it together — into something
+that could honestly be called an understanding of the patient in front of us.</p>
+<p>The question, when it finally arrived, was simple enough to have been overlooked for years.</p>
+<h5>“What if medicine could understand before it intervened?”</h5>
+<p>Predyx was built to answer that question, and to answer it honestly.</p>
+<p>It was never meant to replace clinical judgment, or to add one more layer to a system already
+heavy with them. What we built instead was quieter than that: a deterministic Clinical
+Intelligence engine — one that connects biological signals, follows them to the trajectories
+they imply, and shows its reasoning openly enough for a physician to trust it, or to disagree
+with it.</p>
+<p>In that sense, Predyx is less an invention than a convergence — of years at the bedside, years
+spent studying biology, years spent building the institutions that make care possible, and one
+belief that has only sharpened with time: that prevention begins with understanding, and
+understanding has to come first.</p>
+<p>We are still near the beginning of this.</p>
+<p>If Predyx helps one physician see more clearly, helps one organization deliver care that holds
+together instead of fragmenting, or helps one person understand their own body a little better
+than they did before — it will have done what it was made to do. Nothing more was asked of
+it.</p>
+<p>Thank you for taking the time to know this work. I look forward to what comes next.</p>
+<p><strong>Dr. Sumant Srivastava</strong><br/>
+<strong style={{color:"#4a93d9"}}>FOUNDER, PREDYX</strong></p>
 
+                </div>
+              </div>
+           
+        </div>
+      </section>
       <section className="funfacts" ref={ref}>
         <div className="overlay">
           <div className="container" style={{ textAlign: "center" }}>
