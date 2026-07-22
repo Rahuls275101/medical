@@ -70,32 +70,32 @@ function Header() {
                   <div className="template-main-menu">
                     <ul className="navbar-nav">
                       <li className="nav-item">
-                        <Link to={baseUrl + '/'} className="nav-link">Home</Link>
+                        <Link to={baseUrl + '/'}  onClick={() => window.scrollTo(0, 0)} className="nav-link">Home</Link>
                       </li>
                       <li className="nav-item">
-                        <Link to={baseUrl + '/clinical-intelligence'} className="nav-link">Clinical Intelligence</Link>
+                        <Link to={baseUrl + '/clinical-intelligence'}  onClick={() => window.scrollTo(0, 0)} className="nav-link">Clinical Intelligence</Link>
                       </li>
                       
                       <li className="nav-item">
-                        <Link className="nav-link">Products</Link>
+                        <Link  onClick={() => window.scrollTo(0, 0)} className="nav-link">Products</Link>
                       </li>
                       <li className="nav-item">
-                        <Link to={baseUrl + '/'} className="nav-link">How It Works</Link>
+                        <Link to={baseUrl + '/'} onClick={() => window.scrollTo(0, 0)}  className="nav-link">How It Works</Link>
                       </li>
                       <li className="nav-item">
-                        <Link to={baseUrl + '/platform'} className="nav-link">Platform</Link>
+                        <Link to={baseUrl + '/platform'} onClick={() => window.scrollTo(0, 0)}  className="nav-link">Platform</Link>
                       </li>
                       <li className="nav-item">
-                        <Link to={baseUrl + '/science-of-clinical-intelligence'} className="nav-link">Science</Link>
+                        <Link to={baseUrl + '/science-of-clinical-intelligence'} onClick={() => window.scrollTo(0, 0)}  className="nav-link">Science</Link>
                       </li>
                       <li className="nav-item">
-                        <Link to={baseUrl + '/predyxiq-services'} className="nav-link">Who We Service</Link>
+                        <Link to={baseUrl + '/predyxiq-services'} onClick={() => window.scrollTo(0, 0)}  className="nav-link">Who We Service</Link>
                       </li>
                       <li className="nav-item">
-                        <Link to={baseUrl + '/predyxiq-quick'} className="nav-link">PredyxIQ Quick</Link>
+                        <Link to={baseUrl + '/predyxiq-quick'} onClick={() => window.scrollTo(0, 0)}  className="nav-link">PredyxIQ Quick</Link>
                       </li>
                       <li className="nav-item">
-                        <Link to={baseUrl + '/about'} className="nav-link">About</Link>
+                        <Link to={baseUrl + '/about'} onClick={() => window.scrollTo(0, 0)} className="nav-link">About</Link>
                       </li>
                     </ul>
                   </div>

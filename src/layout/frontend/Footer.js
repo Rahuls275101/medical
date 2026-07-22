@@ -157,7 +157,7 @@ function Footer() {
                   <a href="#">Partnerships</a>{" "}
                 </li>
                 <li>
-                  <Link to={baseUrl + '/contact'}>Contact</Link>
+                  <Link to={baseUrl + '/contact'} onClick={() => window.scrollTo(0, 0)} >Contact</Link>
                   
                 </li>
                
