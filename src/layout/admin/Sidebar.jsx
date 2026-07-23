@@ -93,6 +93,16 @@ const Sidebar = () => {
               </li>
             )}
 
+
+{isSuperAdmin && (
+              <li className="nav-item">
+                <Link to={baseUrl + '/admin/cms-pages'} className={`nav-link ${location.pathname.includes('/cms-pages') ? 'active' : ''}`}>
+                  <i className="nav-icon fas fa-user-cog"></i>
+                  <p>CMS Pages</p>
+                </Link>
+              </li>
+            )}
+
             {/* Settings - Only for Super Admin */}
          
               <li className="nav-item">
