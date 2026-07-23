@@ -1,4 +1,4 @@
-// pages/PredyxAssessment.jsx - Complete Version With All Document Fields
+// pages/PredyxAssessment.jsx - Updated with submit confirmation
 import React, { useState, useRef, useEffect} from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { apiBaseUrl } from '../../config';
@@ -7,15 +7,16 @@ import jsPDF from 'jspdf';
 import html2canvas from 'html2canvas';
 
 const HomePage = () => {
-    // Form state - ALL fields from document
+    // Form state - ALL fields in imperial units
     const [formData, setFormData] = useState({
         patient_name: '',
         age: '',
         sex: '',
-        height_cm: '',
-        weight_kg: '',
-        waist_cm: '',
-        hip_cm: '',
+        height_feet: '',
+        height_inches: '',
+        weight_lbs: '',
+        waist_inches: '',
+        hip_inches: '',
         sbp_mmHg: '',
         mobile_number: '',
         email: '',
@@ -38,6 +39,7 @@ const HomePage = () => {
     const [result, setResult] = useState(null);
     const [showResult, setShowResult] = useState(false);
     const [showConfirm, setShowConfirm] = useState(false);
+    const [showSubmitConfirm, setShowSubmitConfirm] = useState(false); // NEW: Submit confirmation
     const [currentStep, setCurrentStep] = useState(1);
     const [pdfLoading, setPdfLoading] = useState(false);
     const [printLoading, setPrintLoading] = useState(false);
@@ -47,7 +49,6 @@ const HomePage = () => {
         if (id) {
         
         } else {
-          // Agar URL mein ID nahi hai to localStorage se lo
           const storedUser = localStorage.getItem('user');
           if (storedUser) {
             const user = JSON.parse(storedUser);
@@ -63,30 +64,22 @@ const HomePage = () => {
           }
         }
       }, [id]);
-    
 
-  // ✅ Logout Function
-  const handleLogout = () => {
-    // Clear all localStorage data
-    localStorage.removeItem('authenticated');
-    localStorage.removeItem('user');
-    localStorage.removeItem('userEmail');
-    localStorage.removeItem('token');
-    localStorage.removeItem('userRole');
-    localStorage.removeItem('rememberMe');
-    
-    // Close modal
-    setShowLogoutModal(false);
-    
-    // Redirect to login page
-    navigate('/login');
-  };
+    // Logout Function
+    const handleLogout = () => {
+        localStorage.removeItem('authenticated');
+        localStorage.removeItem('user');
+        localStorage.removeItem('userEmail');
+        localStorage.removeItem('token');
+        localStorage.removeItem('userRole');
+        localStorage.removeItem('rememberMe');
+        setShowLogoutModal(false);
+        navigate('/login');
+    };
 
-  // ✅ Confirm Logout
-  const confirmLogout = () => {
-    setShowLogoutModal(true);
-  };
-
+    const confirmLogout = () => {
+        setShowLogoutModal(true);
+    };
 
     const reportRef = useRef(null);
 
@@ -138,46 +131,55 @@ const HomePage = () => {
                 }
                 break;
 
-            case 'height_cm':
+            case 'height_feet':
                 if (!value) {
                     error = 'Height is required';
                 } else {
                     const numValue = Number(value);
-                    if (isNaN(numValue) || numValue < 120 || numValue > 230) {
-                        error = 'Height must be between 120 and 230 cm';
+                    if (isNaN(numValue) || numValue < 3 || numValue > 7) {
+                        error = 'Height must be between 3 and 7 feet';
                     }
                 }
                 break;
 
-            case 'weight_kg':
+            case 'height_inches':
+                if (value) {
+                    const numValue = Number(value);
+                    if (isNaN(numValue) || numValue < 0 || numValue > 11) {
+                        error = 'Inches must be between 0 and 11';
+                    }
+                }
+                break;
+
+            case 'weight_lbs':
                 if (!value) {
                     error = 'Weight is required';
                 } else {
                     const numValue = Number(value);
-                    if (isNaN(numValue) || numValue < 25 || numValue > 250) {
-                        error = 'Weight must be between 25 and 250 kg';
+                    if (isNaN(numValue) || numValue < 55 || numValue > 550) {
+                        error = 'Weight must be between 55 and 550 lbs';
                     }
                 }
                 break;
 
-            case 'waist_cm':
+            case 'waist_inches':
                 if (!value) {
                     error = 'Waist is required';
                 } else {
                     const numValue = Number(value);
-                    if (isNaN(numValue) || numValue < 40 || numValue > 200) {
-                        error = 'Waist must be between 40 and 200 cm';
+                    if (isNaN(numValue) || numValue < 16 || numValue > 80) {
+                        error = 'Waist must be between 16 and 80 inches';
                     }
                 }
                 break;
 
-            case 'hip_cm':
+            case 'hip_inches':
                 if (!value) {
                     error = 'Hip is required';
                 } else {
                     const numValue = Number(value);
-                    if (isNaN(numValue) || numValue < 40 || numValue > 220) {
-                        error = 'Hip must be between 40 and 220 cm';
+                    if (isNaN(numValue) || numValue < 16 || numValue > 87) {
+                        error = 'Hip must be between 16 and 87 inches';
                     }
                 }
                 break;
@@ -210,7 +212,6 @@ const HomePage = () => {
             [name]: newValue
         }));
 
-        // Validate the field
         const error = validateField(name, newValue);
         setFieldErrors(prev => ({
             ...prev,
@@ -224,14 +225,9 @@ const HomePage = () => {
     const handleNumberInput = (e) => {
         const { name, value } = e.target;
         
-        // Only allow digits and decimal point
         const cleanedValue = value.replace(/[^0-9.]/g, '');
-        
-        // Prevent multiple decimal points
         const parts = cleanedValue.split('.');
         if (parts.length > 2) return;
-        
-        // Prevent decimal point at start
         if (cleanedValue === '.') return;
 
         setFormData(prev => ({
@@ -254,28 +250,24 @@ const HomePage = () => {
         let isValid = true;
 
         if (step === 1) {
-            // Patient name validation
             const nameError = validateField('patient_name', formData.patient_name);
             if (nameError) {
                 stepErrors.patient_name = nameError;
                 isValid = false;
             }
 
-            // Age validation
             const ageError = validateField('age', formData.age);
             if (ageError) {
                 stepErrors.age = ageError;
                 isValid = false;
             }
 
-            // Sex validation
             const sexError = validateField('sex', formData.sex);
             if (sexError) {
                 stepErrors.sex = sexError;
                 isValid = false;
             }
 
-            // Mobile validation (if provided)
             if (formData.mobile_number) {
                 const mobileError = validateField('mobile_number', formData.mobile_number);
                 if (mobileError) {
@@ -284,7 +276,6 @@ const HomePage = () => {
                 }
             }
 
-            // Email validation (if provided)
             if (formData.email) {
                 const emailError = validateField('email', formData.email);
                 if (emailError) {
@@ -294,7 +285,6 @@ const HomePage = () => {
             }
 
         } else if (step === 2) {
-            // Pincode validation (if provided)
             if (formData.pin_code) {
                 const pinError = validateField('pin_code', formData.pin_code);
                 if (pinError) {
@@ -304,18 +294,40 @@ const HomePage = () => {
             }
 
         } else if (step === 3) {
-            // Anthropometry validations
-            const fields = ['height_cm', 'weight_kg', 'waist_cm', 'hip_cm'];
-            fields.forEach(field => {
-                const error = validateField(field, formData[field]);
-                if (error) {
-                    stepErrors[field] = error;
+            // Anthropometry validations with imperial units
+            const heightFeetError = validateField('height_feet', formData.height_feet);
+            if (heightFeetError) {
+                stepErrors.height_feet = heightFeetError;
+                isValid = false;
+            }
+            
+            if (formData.height_inches) {
+                const heightInchesError = validateField('height_inches', formData.height_inches);
+                if (heightInchesError) {
+                    stepErrors.height_inches = heightInchesError;
                     isValid = false;
                 }
-            });
+            }
+
+            const weightError = validateField('weight_lbs', formData.weight_lbs);
+            if (weightError) {
+                stepErrors.weight_lbs = weightError;
+                isValid = false;
+            }
+
+            const waistError = validateField('waist_inches', formData.waist_inches);
+            if (waistError) {
+                stepErrors.waist_inches = waistError;
+                isValid = false;
+            }
+
+            const hipError = validateField('hip_inches', formData.hip_inches);
+            if (hipError) {
+                stepErrors.hip_inches = hipError;
+                isValid = false;
+            }
 
         } else if (step === 4) {
-            // SBP validation
             const sbpError = validateField('sbp_mmHg', formData.sbp_mmHg);
             if (sbpError) {
                 stepErrors.sbp_mmHg = sbpError;
@@ -340,16 +352,32 @@ const HomePage = () => {
         setError(null);
     };
 
+    // NEW: Handle form submission with confirmation
     const handleSubmit = async (e) => {
         e.preventDefault();
+        
+        // Validate all fields first
         if (!validateStep(4)) return;
 
+        // Check for high risk markers
         if (formData.sbp_mmHg >= 180 || formData.prior_cad) {
             setShowConfirm(true);
             return;
         }
 
-        await submitAssessment();
+        // Show submit confirmation
+        setShowSubmitConfirm(true);
+    };
+
+    // NEW: Confirm submit and proceed
+    const confirmSubmit = () => {
+        setShowSubmitConfirm(false);
+        submitAssessment();
+    };
+
+    // NEW: Cancel submit
+    const cancelSubmit = () => {
+        setShowSubmitConfirm(false);
     };
 
     const submitAssessment = async () => {
@@ -359,11 +387,13 @@ const HomePage = () => {
         try {
             const payload = {
                 ...formData,
+                id: id,
                 age: parseInt(formData.age),
-                height_cm: parseFloat(formData.height_cm),
-                weight_kg: parseFloat(formData.weight_kg),
-                waist_cm: parseFloat(formData.waist_cm),
-                hip_cm: parseFloat(formData.hip_cm),
+                height_feet: parseInt(formData.height_feet) || 0,
+                height_inches: parseInt(formData.height_inches) || 0,
+                weight_lbs: parseFloat(formData.weight_lbs),
+                waist_inches: parseFloat(formData.waist_inches),
+                hip_inches: parseFloat(formData.hip_inches),
                 sbp_mmHg: parseInt(formData.sbp_mmHg)
             };
 
@@ -387,10 +417,11 @@ const HomePage = () => {
                         pin_code: formData.pin_code
                     },
                     raw_inputs: responseData.raw_inputs || {
-                        height_cm: parseFloat(formData.height_cm),
-                        weight_kg: parseFloat(formData.weight_kg),
-                        waist_cm: parseFloat(formData.waist_cm),
-                        hip_cm: parseFloat(formData.hip_cm),
+                        height_feet: parseInt(formData.height_feet) || 0,
+                        height_inches: parseInt(formData.height_inches) || 0,
+                        weight_lbs: parseFloat(formData.weight_lbs),
+                        waist_inches: parseFloat(formData.waist_inches),
+                        hip_inches: parseFloat(formData.hip_inches),
                         sbp_mmHg: parseInt(formData.sbp_mmHg),
                         diabetes: formData.diabetes,
                         hypertension: formData.hypertension,
@@ -514,7 +545,7 @@ const HomePage = () => {
                             .result-section { border: 1px solid #ddd; padding: 20px; border-radius: 8px; }
                             .full-width { grid-column: 1 / -1; }
                             .info-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
-                            .measurements-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 10px; }
+                            .measurements-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
                             .domain-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
                             .domain-item { display: flex; justify-content: space-between; padding: 8px; background: #f5f5f5; }
                             .driver-item { display: flex; justify-content: space-between; padding: 8px; border-bottom: 1px solid #eee; }
@@ -550,16 +581,17 @@ const HomePage = () => {
         }
     };
 
-    // RESET FORM FUNCTION - FIXED
+    // RESET FORM FUNCTION
     const resetForm = () => {
         setFormData({
             patient_name: '',
             age: '',
             sex: '',
-            height_cm: '',
-            weight_kg: '',
-            waist_cm: '',
-            hip_cm: '',
+            height_feet: '',
+            height_inches: '',
+            weight_lbs: '',
+            waist_inches: '',
+            hip_inches: '',
             sbp_mmHg: '',
             mobile_number: '',
             email: '',
@@ -581,6 +613,8 @@ const HomePage = () => {
         setLoading(false);
         setPdfLoading(false);
         setPrintLoading(false);
+        setShowSubmitConfirm(false);
+        setShowConfirm(false);
     };
 
     const getPriorityColor = (priority) => {
@@ -680,11 +714,11 @@ const HomePage = () => {
                         <div className="result-section">
                             <h3>📏 Measurements</h3>
                             <div className="measurements-grid">
-                                <div><strong>Height:</strong> {rawInputs.height_cm || 'N/A'} cm</div>
-                                <div><strong>Weight:</strong> {rawInputs.weight_kg || 'N/A'} kg</div>
+                                <div><strong>Height:</strong> {rawInputs.height_feet || 0}ft {rawInputs.height_inches || 0}in</div>
+                                <div><strong>Weight:</strong> {rawInputs.weight_lbs || 'N/A'} lbs</div>
                                 <div><strong>BMI:</strong> {derived.bmi || 'N/A'} ({derived.bmi_category || 'N/A'})</div>
-                                <div><strong>Waist:</strong> {rawInputs.waist_cm || 'N/A'} cm</div>
-                                <div><strong>Hip:</strong> {rawInputs.hip_cm || 'N/A'} cm</div>
+                                <div><strong>Waist:</strong> {rawInputs.waist_inches || 'N/A'} in</div>
+                                <div><strong>Hip:</strong> {rawInputs.hip_inches || 'N/A'} in</div>
                                 <div><strong>WHR:</strong> {derived.whr || 'N/A'}</div>
                                 <div><strong>WHtR:</strong> {derived.whtr || 'N/A'} ({derived.whtr_category || 'N/A'})</div>
                                 <div><strong>SBP:</strong> {rawInputs.sbp_mmHg || 'N/A'} mmHg</div>
@@ -943,78 +977,98 @@ const HomePage = () => {
                     </div>
                 )}
 
-                {/* Step 3: Anthropometry */}
+                {/* Step 3: Anthropometry with all imperial units */}
                 {currentStep === 3 && (
                     <div className="form-step">
                         <div className="form-section">
-                            <h3>📏 Body Measurements</h3>
+                            <h3>📏 Body Measurements (Imperial)</h3>
                             <div className="form-grid">
                                 <div className="form-group">
-                                    <label>Height (cm) *</label>
+                                    <label>Height (feet) *</label>
                                     <input
                                         type="number"
-                                        name="height_cm"
-                                        value={formData.height_cm}
+                                        name="height_feet"
+                                        value={formData.height_feet}
                                         onChange={handleNumberInput}
-                                        placeholder="120-230"
-                                        min="120"
-                                        max="230"
-                                        step="0.1"
+                                        placeholder="3-7"
+                                        min="3"
+                                        max="7"
+                                        step="1"
                                     />
-                                    {fieldErrors.height_cm && (
-                                        <span className="field-error">{fieldErrors.height_cm}</span>
+                                    {fieldErrors.height_feet && (
+                                        <span className="field-error">{fieldErrors.height_feet}</span>
                                     )}
                                 </div>
 
                                 <div className="form-group">
-                                    <label>Weight (kg) *</label>
+                                    <label>Height (inches)</label>
                                     <input
                                         type="number"
-                                        name="weight_kg"
-                                        value={formData.weight_kg}
+                                        name="height_inches"
+                                        value={formData.height_inches}
                                         onChange={handleNumberInput}
-                                        placeholder="25-250"
-                                        min="25"
-                                        max="250"
-                                        step="0.1"
+                                        placeholder="0-11"
+                                        min="0"
+                                        max="11"
+                                        step="1"
                                     />
-                                    {fieldErrors.weight_kg && (
-                                        <span className="field-error">{fieldErrors.weight_kg}</span>
+                                    {fieldErrors.height_inches && (
+                                        <span className="field-error">{fieldErrors.height_inches}</span>
+                                    )}
+                                    <small className="helper-text">Example: 5 feet 8 inches</small>
+                                </div>
+
+                                <div className="form-group">
+                                    <label>Weight (lbs) *</label>
+                                    <input
+                                        type="number"
+                                        name="weight_lbs"
+                                        value={formData.weight_lbs}
+                                        onChange={handleNumberInput}
+                                        placeholder="55-550"
+                                        min="55"
+                                        max="550"
+                                        step="0.5"
+                                    />
+                                    {fieldErrors.weight_lbs && (
+                                        <span className="field-error">{fieldErrors.weight_lbs}</span>
                                     )}
                                 </div>
 
                                 <div className="form-group">
-                                    <label>Waist (cm) *</label>
+                                    <label>Waist (inches) *</label>
                                     <input
                                         type="number"
-                                        name="waist_cm"
-                                        value={formData.waist_cm}
+                                        name="waist_inches"
+                                        value={formData.waist_inches}
                                         onChange={handleNumberInput}
-                                        placeholder="40-200"
-                                        min="40"
-                                        max="200"
-                                        step="0.1"
+                                        placeholder="16-80"
+                                        min="16"
+                                        max="80"
+                                        step="0.5"
                                     />
-                                    {fieldErrors.waist_cm && (
-                                        <span className="field-error">{fieldErrors.waist_cm}</span>
+                                    {fieldErrors.waist_inches && (
+                                        <span className="field-error">{fieldErrors.waist_inches}</span>
                                     )}
+                                    <small className="helper-text">Measure at narrowest point</small>
                                 </div>
 
                                 <div className="form-group">
-                                    <label>Hip (cm) *</label>
+                                    <label>Hip (inches) *</label>
                                     <input
                                         type="number"
-                                        name="hip_cm"
-                                        value={formData.hip_cm}
+                                        name="hip_inches"
+                                        value={formData.hip_inches}
                                         onChange={handleNumberInput}
-                                        placeholder="40-220"
-                                        min="40"
-                                        max="220"
-                                        step="0.1"
+                                        placeholder="16-87"
+                                        min="16"
+                                        max="87"
+                                        step="0.5"
                                     />
-                                    {fieldErrors.hip_cm && (
-                                        <span className="field-error">{fieldErrors.hip_cm}</span>
+                                    {fieldErrors.hip_inches && (
+                                        <span className="field-error">{fieldErrors.hip_inches}</span>
                                     )}
+                                    <small className="helper-text">Measure at widest point</small>
                                 </div>
                             </div>
                         </div>
@@ -1110,6 +1164,48 @@ const HomePage = () => {
                 </div>
             </form>
 
+            {/* NEW: Submit Confirmation Modal */}
+            {showSubmitConfirm && (
+                <div className="modal-overlay">
+                    <div className="modal-content">
+                        <h3>📋 Confirm Submission</h3>
+                        <div className="confirm-icon">⚠️</div>
+                        <p>Are you sure you want to submit this assessment?</p>
+                        <div className="confirm-details">
+                            <p><strong>Patient:</strong> {formData.patient_name || 'Not provided'}</p>
+                            <p><strong>Age:</strong> {formData.age || 'Not provided'} years</p>
+                            <p><strong>Sex:</strong> {formData.sex || 'Not provided'}</p>
+                            <p><strong>Measurements:</strong></p>
+                            <ul>
+                                <li>Height: {formData.height_feet || 0}ft {formData.height_inches || 0}in</li>
+                                <li>Weight: {formData.weight_lbs || 'N/A'} lbs</li>
+                                <li>Waist: {formData.waist_inches || 'N/A'} in</li>
+                                <li>Hip: {formData.hip_inches || 'N/A'} in</li>
+                                <li>SBP: {formData.sbp_mmHg || 'N/A'} mmHg</li>
+                            </ul>
+                            <p><strong>Medical History:</strong></p>
+                            <ul>
+                                {formData.diabetes && <li>• Diabetes</li>}
+                                {formData.hypertension && <li>• Hypertension</li>}
+                                {formData.tobacco_use && <li>• Tobacco Use</li>}
+                                {formData.prior_cad && <li>• Prior CAD</li>}
+                                {!formData.diabetes && !formData.hypertension && !formData.tobacco_use && !formData.prior_cad && <li>• No conditions reported</li>}
+                            </ul>
+                        </div>
+                        <p className="confirm-warning">Please review the information before proceeding.</p>
+                        <div className="modal-actions">
+                            <button onClick={confirmSubmit} className="btn-confirm" disabled={loading}>
+                                {loading ? 'Submitting...' : '✅ Yes, Submit'}
+                            </button>
+                            <button onClick={cancelSubmit} className="btn-cancel">
+                                ❌ Cancel
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            )}
+
+            {/* High Risk Confirmation Modal */}
             {showConfirm && (
                 <div className="modal-overlay">
                     <div className="modal-content">
@@ -1121,8 +1217,8 @@ const HomePage = () => {
                         </ul>
                         <p>Do you want to proceed with the assessment?</p>
                         <div className="modal-actions">
-                            <button onClick={submitAssessment} className="btn-confirm">
-                                Yes, Proceed
+                            <button onClick={confirmSubmit} className="btn-confirm" disabled={loading}>
+                                {loading ? 'Processing...' : 'Yes, Proceed'}
                             </button>
                             <button onClick={() => setShowConfirm(false)} className="btn-cancel">
                                 Cancel
