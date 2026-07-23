@@ -1,4 +1,4 @@
-// pages/PredyxAssessment.jsx - Updated with submit confirmation
+// pages/PredyxAssessment.jsx - Updated with checkbox highlighting
 import React, { useState, useRef, useEffect} from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { apiBaseUrl } from '../../config';
@@ -39,7 +39,7 @@ const HomePage = () => {
     const [result, setResult] = useState(null);
     const [showResult, setShowResult] = useState(false);
     const [showConfirm, setShowConfirm] = useState(false);
-    const [showSubmitConfirm, setShowSubmitConfirm] = useState(false); // NEW: Submit confirmation
+    const [showSubmitConfirm, setShowSubmitConfirm] = useState(false);
     const [currentStep, setCurrentStep] = useState(1);
     const [pdfLoading, setPdfLoading] = useState(false);
     const [printLoading, setPrintLoading] = useState(false);
@@ -294,7 +294,6 @@ const HomePage = () => {
             }
 
         } else if (step === 3) {
-            // Anthropometry validations with imperial units
             const heightFeetError = validateField('height_feet', formData.height_feet);
             if (heightFeetError) {
                 stepErrors.height_feet = heightFeetError;
@@ -352,30 +351,24 @@ const HomePage = () => {
         setError(null);
     };
 
-    // NEW: Handle form submission with confirmation
     const handleSubmit = async (e) => {
         e.preventDefault();
         
-        // Validate all fields first
         if (!validateStep(4)) return;
 
-        // Check for high risk markers
         if (formData.sbp_mmHg >= 180 || formData.prior_cad) {
             setShowConfirm(true);
             return;
         }
 
-        // Show submit confirmation
         setShowSubmitConfirm(true);
     };
 
-    // NEW: Confirm submit and proceed
     const confirmSubmit = () => {
         setShowSubmitConfirm(false);
         submitAssessment();
     };
 
-    // NEW: Cancel submit
     const cancelSubmit = () => {
         setShowSubmitConfirm(false);
     };
@@ -1099,10 +1092,11 @@ const HomePage = () => {
                             </div>
                         </div>
 
+                        {/* UPDATED: Medical History with Highlighting */}
                         <div className="form-section">
                             <h3>📋 Medical History</h3>
                             <div className="checkbox-grid">
-                                <label className="checkbox-label">
+                                <label className={`checkbox-label ${formData.diabetes ? 'selected' : ''}`}>
                                     <input
                                         type="checkbox"
                                         name="diabetes"
@@ -1110,8 +1104,9 @@ const HomePage = () => {
                                         onChange={handleInputChange}
                                     />
                                     <span className="checkbox-text">Diabetes</span>
+                                    {formData.diabetes && <span className="checkbox-badge">✓</span>}
                                 </label>
-                                <label className="checkbox-label">
+                                <label className={`checkbox-label ${formData.hypertension ? 'selected' : ''}`}>
                                     <input
                                         type="checkbox"
                                         name="hypertension"
@@ -1119,8 +1114,9 @@ const HomePage = () => {
                                         onChange={handleInputChange}
                                     />
                                     <span className="checkbox-text">Hypertension</span>
+                                    {formData.hypertension && <span className="checkbox-badge">✓</span>}
                                 </label>
-                                <label className="checkbox-label">
+                                <label className={`checkbox-label ${formData.tobacco_use ? 'selected' : ''}`}>
                                     <input
                                         type="checkbox"
                                         name="tobacco_use"
@@ -1128,8 +1124,9 @@ const HomePage = () => {
                                         onChange={handleInputChange}
                                     />
                                     <span className="checkbox-text">Tobacco Use</span>
+                                    {formData.tobacco_use && <span className="checkbox-badge">✓</span>}
                                 </label>
-                                <label className="checkbox-label">
+                                <label className={`checkbox-label ${formData.prior_cad ? 'selected' : ''}`}>
                                     <input
                                         type="checkbox"
                                         name="prior_cad"
@@ -1137,6 +1134,7 @@ const HomePage = () => {
                                         onChange={handleInputChange}
                                     />
                                     <span className="checkbox-text">Prior CAD</span>
+                                    {formData.prior_cad && <span className="checkbox-badge">✓</span>}
                                 </label>
                             </div>
                         </div>
@@ -1164,7 +1162,7 @@ const HomePage = () => {
                 </div>
             </form>
 
-            {/* NEW: Submit Confirmation Modal */}
+            {/* Submit Confirmation Modal */}
             {showSubmitConfirm && (
                 <div className="modal-overlay">
                     <div className="modal-content">
