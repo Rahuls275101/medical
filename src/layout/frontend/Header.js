@@ -77,10 +77,10 @@ function Header() {
                       </li>
                       
                       <li className="nav-item">
-                        <Link  onClick={() => window.scrollTo(0, 0)} className="nav-link">Products</Link>
+                        <Link to={baseUrl + '/products'} onClick={() => window.scrollTo(0, 0)} className="nav-link">Products</Link>
                       </li>
                       <li className="nav-item">
-                        <Link to={baseUrl + '/'} onClick={() => window.scrollTo(0, 0)}  className="nav-link">How It Works</Link>
+                        <Link to={baseUrl + '/how-it-works'} onClick={() => window.scrollTo(0, 0)}  className="nav-link">How It Works</Link>
                       </li>
                       <li className="nav-item">
                         <Link to={baseUrl + '/platform'} onClick={() => window.scrollTo(0, 0)}  className="nav-link">Platform</Link>

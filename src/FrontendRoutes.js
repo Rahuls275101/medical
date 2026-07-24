@@ -12,7 +12,9 @@ import Insurance from './component/frontend/Insurance';
 import HealthSystem from './component/frontend/HealthSystem';
 import LaboratoriesDiagnostics from './component/frontend/LaboratoriesDiagnostics';
 import ScienceOfClinicalIntelligence from './component/frontend/ScienceOfClinicalIntelligence';
+import HowItWorks from './component/frontend/HowItWorks';
 import AboutPage from './component/frontend/AboutPage';
+import Products from './component/frontend/Products';
 import MainPage from './component/frontend/MainPage';
 import ContactPage from './component/frontend/ContactPage';
 
@@ -36,7 +38,9 @@ const FrontendRoutes = () => {
         { path: 'health-system', element: <HealthSystem /> },
         { path: 'laboratories-diagnostics', element: <LaboratoriesDiagnostics /> },
         { path: 'science-of-clinical-intelligence', element: <ScienceOfClinicalIntelligence /> },
+        { path: 'how-it-works', element: <HowItWorks /> },
         { path: 'about', element: <AboutPage /> },
+        { path: 'products', element: <Products /> },
         { path: 'main', element: <MainPage /> },
         { path: 'contact', element: <ContactPage /> },
     

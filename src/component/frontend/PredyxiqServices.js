@@ -7,7 +7,7 @@ import { Link } from "react-router-dom";
 import logo from "./logo.png";
 import heroImg from "./../../images/quick2.png";
 import minute from "./../../images/quick.png";
-import medicalImg from "./../../images/clinical.png";
+import medicalImg from "./../../images/clinical2.png";
 
 // Import owl carousel CSS
 import "owl.carousel/dist/assets/owl.carousel.css";
