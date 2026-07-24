@@ -1,0 +1,27 @@
+/* CmsEditpage.css - For better editor styling */
+.ck-editor__editable_inline {
+    min-height: 400px !important;
+    border: 1px solid #ced4da !important;
+    border-radius: 0.25rem !important;
+    padding: 1rem !important;
+}
+
+.ck-editor__editable_inline:focus {
+    border-color: #80bdff !important;
+    box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25) !important;
+}
+
+.ck.ck-toolbar {
+    border-radius: 0.25rem 0.25rem 0 0 !important;
+    border: 1px solid #ced4da !important;
+    border-bottom: none !important;
+}
+
+.ck.ck-editor__main > .ck-editor__editable {
+    background: #ffffff !important;
+}
+
+/* Fix for dropdown menus */
+.ck.ck-dropdown__panel {
+    z-index: 9999 !important;
+}

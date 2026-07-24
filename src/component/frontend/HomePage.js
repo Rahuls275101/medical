@@ -1,7 +1,9 @@
 import React, { useEffect, useRef, useState } from "react";
 import { Helmet } from "react-helmet-async";
 import CountUp from "react-countup";
+import { baseUrl, apiBaseUrl,apiUrl } from '../../config';
 import { useInView } from "react-intersection-observer";
+import axios from 'axios';
 
 import logo from "./logo.png";
 import heroImg from "./../../images/baner.jpg";
@@ -14,16 +16,58 @@ import person2 from "./../../images/testimonial3.jpg";
 import person3 from "./../../images/testimonial3.jpg";
 import medicalImg from "./../../images/clinical.png";
 import dcs from "./../../images/dcs.png"; // Replace with your image
+import parse from "html-react-parser";
+
+
 
 // Import owl carousel CSS
 import "owl.carousel/dist/assets/owl.carousel.css";
 import "owl.carousel/dist/assets/owl.theme.default.css";
 
 const MainPage = () => {
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
   const isCarouselInitialized = useRef(false);
   const isDoctorCarouselInitialized = useRef(false);
   const [isCarouselReady, setIsCarouselReady] = useState(false);
   const [activeAccordion, setActiveAccordion] = useState("collapseOne");
+  const [cms, setCms] = useState([]);
+
+
+  const fetchCms = async () => {
+    setLoading(true);
+    setError(null);
+  
+    try {
+      const { data } = await axios.get(`${apiBaseUrl}/all-get-cms`);
+  
+      if (data.status) {
+        const cmsData = {};
+  
+        data.cms_pages.forEach((item) => {
+          cmsData[item.cms_id] = item;
+        });
+  
+        setCms(cmsData);
+      } else {
+        setCms({});
+        setError(data.message || "Failed to fetch CMS pages");
+      }
+    } catch (err) {
+      console.error("Error fetching CMS pages:", err);
+      setCms({});
+      setError(
+        err.response?.data?.message ||
+        "Failed to load CMS pages. Please try again."
+      );
+    } finally {
+      setLoading(false);
+    }
+  };
+  
+  useEffect(() => {
+    fetchCms();
+  }, []);
 
   const evidence = [
     "Visceral-to-subcutaneous fat ratio has steadily increased over successive reviews.",
@@ -448,23 +492,19 @@ const MainPage = () => {
   return (
     <div>
       <Helmet>
-        <title>About US - My Website</title>
+        <title> Predyx IQ</title>
       </Helmet>
 
       <section className="hero-section">
         <div className="hdsd">
           <div className="container">
-            <h3>
-              Understanding biological trajectories before disease becomes
-              obvious.
-            </h3>
-            <p>
-              PredyxIQ transforms fragmented clinical observations into clear,
-              explainable biological pathways. By connecting lifestyle signals,
-              medical history, biomarkers, and physical measurements, it maps
-              out organ-system trajectories that deserve clinical focus—while
-              keeping the physician firmly at the center of every decision.
-            </p>
+          <h3>
+  {cms[1]?.cms_page_heading}
+</h3>
+
+{
+  parse(cms[1]?.cms_page_description || "")
+}
             <a href="#" className="action-items-primary-btn">
               Request a Demo
               <i className="fas fa-chevron-right" />
@@ -481,11 +521,11 @@ const MainPage = () => {
                 fontSize: "20px",
               }}
             >
-              Discuss a Clinical or Strategic Partnership →
+              {cms[1]?.cms_page_small_description} →
             </h3>
           </div>
         </div>
-        <img src={heroImg} alt="About us" className="img-fluid" />
+        <img src={`${apiBaseUrl}/assets/images/${cms[1]?.cms_image}`} alt="About us" className="img-fluid" />
       </section>
 
       <section className="category-section">
@@ -493,35 +533,23 @@ const MainPage = () => {
           <div className="row justify-content-center">
             <div className="col-lg-10 text-center">
               <h2 className="section-title">
-                PredyxIQ <span>Clinical Intelligence</span>
+             
+              {
+  parse(cms[2]?.cms_page_heading || "")
+}
               </h2>
               <p className="subtitle">
-                PredyxIQ doesn't collect more information. It helps physicians
-                understand the information they already have.
+              {cms[2]?.cms_page_small_description}
               </p>
             </div>
           </div>
           <div className="row">
             <div className="col-lg-12">
               <div className="highlight-box">
-                <h4>Understanding Medicine Beyond Individual Data Points</h4>
-                <p className="mb-0">
-                  Modern medicine generates an unprecedented amount of clinical
-                  information every day—laboratory values, physiological
-                  measurements, symptoms, medical history, imaging, and
-                  biomarkers. Yet these observations are often interpreted
-                  independently, despite the fact that human biology functions
-                  as an interconnected system.
-                </p>
-                <br />
-                <p className="mb-0">
-                  PredyxIQ transforms isolated clinical signals into a unified
-                  biological understanding. By identifying relationships between
-                  variables, mapping latent physiological states, and predicting
-                  organ trajectories, it delivers meaningful clinical
-                  intelligence that supports faster, more confident physician
-                  decisions.
-                </p>
+                <h4> {cms[3]?.cms_page_heading}</h4>
+                {
+  parse(cms[3]?.cms_page_description || "")
+}
               </div>
             </div>
           </div>
